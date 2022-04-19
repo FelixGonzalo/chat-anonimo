@@ -1,0 +1,4 @@
+/dist
+/myfiles
+package-lock.json
+tsconfig.json
