@@ -1,5 +1,5 @@
-import { UserProps } from '../User/types'
+import { UserType } from '../../types/user'
 
 export type UserListProps = {
-  users: Array<UserProps>
+  users: Array<UserType>
 }

@@ -8,7 +8,7 @@ export function Message({ user_from, user_to, message, date }: MessageProps) {
   if (user_from.id === currentUser.id) {
     return (
       <MessageContainer currentUser={true}>
-        <span>{user_to.nick}</span>
+        <span>{currentUser.nick}</span>
         <p>{message}</p>
         <span>{date}</span>
       </MessageContainer>

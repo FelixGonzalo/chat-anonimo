@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { initUserState } from '../reducers/usersReducer'
 
-export function useInitLocalDB(itemLocalStorage: string) {
+export function useInitLocalDB(itemLocalStorage: string, action: any) {
   const dispatch = useDispatch()
 
   const initData = () => {
     try {
-      const usersLocalStorage: any = localStorage.getItem(itemLocalStorage)
-      const currentUsers = JSON.parse(usersLocalStorage)
-      dispatch(initUserState(currentUsers))
+      const data: any = localStorage.getItem(itemLocalStorage)
+      const currentData = JSON.parse(data)
+      dispatch(action(currentData))
     } catch (error) {
       console.error(error)
     }

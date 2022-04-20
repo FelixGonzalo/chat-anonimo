@@ -1,28 +1,16 @@
 import { useSelector } from 'react-redux'
 import { Message } from '../Message'
-import { MessageProps } from '../Message/types'
-import { UserProps } from '../User/types'
 import { ChatContainer, ChatHeader, ChatMessages } from './styles'
+import { ChatProps } from './types'
 
-type ChatProps = {
-  userTo?: UserProps | null
-  messages: Array<MessageProps> | []
-}
-
-export function Chat({ userTo, messages }: ChatProps) {
-  const userfrom = useSelector((state: any) => state.currentUser)
-
-  if (!userfrom) {
-    return <ChatContainer>Ingresa tu nick para activar el chat</ChatContainer>
-  }
-
-  if (!userTo) {
-    return <ChatContainer>Inicia un chat!</ChatContainer>
-  }
+export function Chat({ users, messages }: ChatProps) {
+  const currentUser = useSelector((state: any) => state.currentUser)
 
   return (
     <ChatContainer>
-      <ChatHeader>🥷🏻 {userTo.nick}</ChatHeader>
+      <ChatHeader>
+        🥷🏻 {users.map((user) => (user.id !== currentUser.id ? user.nick : ''))}
+      </ChatHeader>
       <ChatMessages>
         {messages &&
           messages.map((msg, index) => (

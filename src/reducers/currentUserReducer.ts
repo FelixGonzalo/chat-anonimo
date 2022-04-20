@@ -1,8 +1,8 @@
 import { AnyAction } from 'redux'
-import { UserProps } from '../components/User/types'
+import { UserType } from '../types/user'
 
 export const currentUserReducer = (
-  state: UserProps | null = null,
+  state: UserType | null = null,
   action: AnyAction
 ) => {
   if (action.type === 'SET_CURRENT_USER') {
@@ -14,7 +14,7 @@ export const currentUserReducer = (
 
 // action creators
 
-export const setCurrentUser = (user: UserProps) => {
+export const setCurrentUser = (user: UserType) => {
   return {
     type: 'SET_CURRENT_USER',
     payload: user,

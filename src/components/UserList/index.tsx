@@ -9,7 +9,12 @@ export function UserList({ users }: UserListProps) {
   return (
     <div>
       {users.map((user) => (
-        <User key={user.id} id={user.id} nick={user.nick} />
+        <User
+          key={user.id}
+          id={user.id}
+          nick={user.nick}
+          privateChatsId={user.privateChatsId}
+        />
       ))}
     </div>
   )

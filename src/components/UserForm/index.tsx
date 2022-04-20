@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
 import { addUser } from '../../reducers/usersReducer'
 import { setCurrentUser } from '../../reducers/currentUserReducer'
-import { UserProps } from '../User/types'
+import { LocalStorage_addItemToArray } from '../../utils/LocalStorage_addItemToArray'
 
 export function UserForm() {
   const dispatch = useDispatch()
@@ -15,35 +15,18 @@ export function UserForm() {
   const loginAsAnonymous = (e: SyntheticEvent) => {
     e.preventDefault()
     const userSessionStorage = sessionStorage.getItem('currentUser') || null
+
     const newUser = {
       id: nanoid(),
       nick,
+      privateChatsId: [],
     }
 
     if (!userSessionStorage) {
       dispatch(addUser(newUser))
       dispatch(setCurrentUser(newUser))
       sessionStorage.setItem('currentUser', JSON.stringify(newUser))
-      saveUsersInLocalStorage(newUser)
-    }
-  }
-
-  const saveUsersInLocalStorage = (user: UserProps) => {
-    try {
-      const usersLocalStorage = localStorage.getItem('users') || null
-
-      if (!usersLocalStorage) {
-        return localStorage.setItem('users', JSON.stringify([user]))
-      }
-
-      const currentUsers = JSON.parse(usersLocalStorage)
-      if (!Array.isArray(currentUsers)) {
-        return localStorage.setItem('users', JSON.stringify([user]))
-      }
-
-      localStorage.setItem('users', JSON.stringify([...currentUsers, user]))
-    } catch (error) {
-      console.error(error)
+      LocalStorage_addItemToArray(newUser, 'users')
     }
   }
 

@@ -1,9 +1,142 @@
-import { UserProps } from './types'
+import { useSelector, useDispatch } from 'react-redux'
+import { nanoid } from 'nanoid'
+import { UserType } from '../../types/user'
+import { PrivateChatType } from '../../types/privateChat'
+import { addPrivateChat } from '../../reducers/privateChatsReducer'
+import { updateChatListOfUser } from '../../reducers/usersReducer'
+import { setCurrentUser } from '../../reducers/currentUserReducer'
+import { setActiveChatId } from '../../reducers/activeChatReducer'
+import { LocalStorage_addItemToArray } from '../../utils/LocalStorage_addItemToArray'
 
-export function User({ nick }: UserProps) {
+export function User({ id, nick, privateChatsId }: UserType) {
+  const dispatch = useDispatch()
+  const currentUser: UserType | null = useSelector(
+    (state: any) => state.currentUser
+  )
+
+  const openChat = () => {
+    try {
+      if (currentUser) {
+        if (id === currentUser.id) {
+          return alert('Es tu usuario !!')
+        } // the same user
+
+        let activeChat = null
+
+        // search privateChat with currentUser and this user
+        const privateChatsLocal: string | null =
+          localStorage.getItem('privateChats')
+        if (privateChatsLocal) {
+          const privateChats: Array<PrivateChatType> =
+            JSON.parse(privateChatsLocal)
+          const result = privateChats.filter(
+            (chat) =>
+              chat.usersId.includes(currentUser.id) && chat.usersId.includes(id)
+          )
+          if (result.length > 0) {
+            activeChat = result[0]
+          }
+        }
+
+        if (!activeChat) {
+          // the two users do not have a active chat
+          // creat chat
+          const newPrivateChat: PrivateChatType = {
+            id: nanoid(),
+            usersId: [currentUser.id, id],
+            messages: [],
+          }
+          const updateCurrentUser: UserType = {
+            ...currentUser,
+            privateChatsId: [...currentUser.privateChatsId, newPrivateChat.id],
+          }
+
+          dispatch(addPrivateChat(newPrivateChat))
+          dispatch(updateChatListOfUser(currentUser.id, newPrivateChat.id))
+          dispatch(updateChatListOfUser(id, newPrivateChat.id))
+          dispatch(setCurrentUser(updateCurrentUser))
+
+          LocalStorage_addItemToArray(newPrivateChat, 'privateChats')
+          updateUsersInLocalStorage(currentUser.id, newPrivateChat.id)
+          updateUsersInLocalStorage(id, newPrivateChat.id)
+          sessionStorage.setItem(
+            'currentUser',
+            JSON.stringify(updateCurrentUser)
+          )
+          activeChat = newPrivateChat
+        } else {
+          // update the current User with the active chat of the other user
+          const userLocal = getUserByIdFromLocalStorage(currentUser.id)
+          if (userLocal) {
+            dispatch(setCurrentUser(userLocal))
+            sessionStorage.setItem('currentUser', JSON.stringify(userLocal))
+          }
+        }
+
+        dispatch(
+          setActiveChatId({
+            id: activeChat.id,
+            users: [
+              {
+                id: currentUser.id,
+                nick: currentUser.nick,
+              },
+              {
+                id: id,
+                nick: nick,
+              },
+            ],
+            messages: activeChat.messages,
+          })
+        )
+        // console.log('chat activo', activeChat)
+        // alert('chat abierto')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const updateUsersInLocalStorage = (userId: string, privateChatId: string) => {
+    try {
+      const usersLocalStorage: string | null = localStorage.getItem('users')
+      if (usersLocalStorage) {
+        const usersParse = JSON.parse(usersLocalStorage)
+        const usersUpdate = usersParse.map((user: UserType) => {
+          if (user.id === userId) {
+            if (!user.privateChatsId.includes(privateChatId)) {
+              return {
+                ...user,
+                privateChatsId: [...user.privateChatsId, privateChatId],
+              }
+            }
+          }
+          return user
+        })
+        localStorage.setItem('users', JSON.stringify(usersUpdate))
+      }
+    } catch (error) {
+      console.error('updateUsersInLocalStorage', error)
+    }
+  }
+
+  const getUserByIdFromLocalStorage = (userId: string) => {
+    try {
+      const usersLocalStorage: string | null = localStorage.getItem('users')
+      if (usersLocalStorage) {
+        const usersParse: Array<UserType> = JSON.parse(usersLocalStorage)
+        const user = usersParse.find((user) => user.id === userId)
+        return user
+      }
+    } catch (error) {
+      console.error('getUserByIdFromLocalStorage', error)
+    }
+  }
+
   return (
     <div>
       <p>🥷 {nick ? nick : 'Sin nombre'}</p>
+      {currentUser && <button onClick={openChat}>chat</button>}
     </div>
   )
 }

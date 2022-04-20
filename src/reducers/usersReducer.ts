@@ -1,19 +1,34 @@
 import { AnyAction } from 'redux'
-import { UserProps } from '../components/User/types'
+import { UserType } from '../types/user'
 
 export const usersReducer = (
-  state: Array<UserProps> = [],
+  state: Array<UserType> = [],
   action: AnyAction
 ) => {
-  if (action.type === 'INIT_USER_STATE') {
+  if (action.type === 'INIT_USERS_STATE') {
     return action.payload || state
   }
 
-  if (action.type === 'ADD_USER') {
+  if (action.type === 'ADD_USER_TO_USERS') {
     const index = state.findIndex(
-      (user: UserProps) => user.id === action.payload.id
+      (user: UserType) => user.id === action.payload.id
     )
     if (index === -1) return [...state, action.payload]
+  }
+
+  if (action.type === 'UPDATE_CHATLIST_OF_USER') {
+    const { userId, privateChatId } = action.payload
+    return state.map((user) => {
+      if (user.id === userId) {
+        if (!user.privateChatsId.includes(privateChatId)) {
+          return {
+            ...user,
+            privateChatsId: [...user.privateChatsId, privateChatId],
+          }
+        }
+      }
+      return user
+    })
   }
 
   return state
@@ -21,19 +36,30 @@ export const usersReducer = (
 
 // action creators
 
-export const initUserState = (users: Array<UserProps>) => {
+export const initUserState = (users: Array<UserType>) => {
   return {
-    type: 'INIT_USER_STATE',
+    type: 'INIT_USERS_STATE',
     payload: users,
   }
 }
 
-export const addUser = ({ id, nick }: UserProps) => {
+export const addUser = ({ id, nick, privateChatsId }: UserType) => {
   return {
-    type: 'ADD_USER',
+    type: 'ADD_USER_TO_USERS',
     payload: {
       id,
       nick,
+      privateChatsId,
+    },
+  }
+}
+
+export const updateChatListOfUser = (userId: string, privateChatId: string) => {
+  return {
+    type: 'UPDATE_CHATLIST_OF_USER',
+    payload: {
+      userId,
+      privateChatId,
     },
   }
 }
