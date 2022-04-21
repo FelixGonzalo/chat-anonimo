@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 import { addPrivateChat } from '../../reducers/privateChatsReducer'
 import { updateChatListOfUser } from '../../reducers/usersReducer'
 import { setCurrentUser } from '../../reducers/currentUserReducer'
-import { setActiveChatId } from '../../reducers/activeChatReducer'
+import { setActiveChat } from '../../reducers/activeChatReducer'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
 import { UserType } from '../../types/user'
 import { PrivateChatType } from '../../types/privateChat'
@@ -75,7 +75,7 @@ export function User({ id, nick }: UserType) {
         }
 
         dispatch(
-          setActiveChatId({
+          setActiveChat({
             id: activeChat.id,
             users: [
               {

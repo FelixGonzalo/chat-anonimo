@@ -1,10 +1,12 @@
 import { useState, ChangeEvent, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMessageToActiveChat } from '../../reducers/activeChatReducer'
+import { setActiveChat } from '../../reducers/activeChatReducer'
 import { PrivateChatType } from '../../types/privateChat'
 import { MessageType } from '../../types/message'
 import { FormContainer, InputMessage, Button } from './styles'
 import { nanoid } from 'nanoid'
+import { localStorage_getArray } from '../../utils/localStorage_getArray'
 
 export function MessageForm() {
   const dispatch = useDispatch()
@@ -18,6 +20,7 @@ export function MessageForm() {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
+    updateActiveChat()
 
     if (inputMessage === '') {
       return
@@ -50,6 +53,24 @@ export function MessageForm() {
     setInputMessage('')
   }
 
+  const updateActiveChat = () => {
+    const privateChatsLocal: Array<PrivateChatType> =
+      localStorage_getArray('privateChats')
+    const chatLocal = privateChatsLocal.find(
+      (chat) => chat.id === activeChat.id
+    )
+
+    if (chatLocal) {
+      dispatch(
+        setActiveChat({
+          id: activeChat.id,
+          users: activeChat.users,
+          messages: chatLocal.messages,
+        })
+      )
+    }
+  }
+
   const saveMsgInPrivateChatsOfLocalStorage = (
     chatId: string,
     message: MessageType
@@ -75,14 +96,17 @@ export function MessageForm() {
   }
 
   return (
-    <FormContainer onSubmit={handleSubmit}>
-      <InputMessage
-        type='text'
-        name='inputMessage'
-        value={inputMessage}
-        onChange={handleInputMessage}
-      />
-      <Button>Enviar</Button>
-    </FormContainer>
+    <>
+      <FormContainer onSubmit={handleSubmit}>
+        <InputMessage
+          type='text'
+          name='inputMessage'
+          value={inputMessage}
+          onChange={handleInputMessage}
+        />
+        <Button>Enviar</Button>
+      </FormContainer>
+      <Button onClick={updateActiveChat}>Actualizar chat</Button>
+    </>
   )
 }

@@ -16,7 +16,7 @@ const initialState: InitialStateProps = {
 }
 
 export const activeChatReducer = (state = initialState, action: AnyAction) => {
-  if (action.type === 'SET_ACTIVE_CHAT_ID') {
+  if (action.type === 'SET_ACTIVE_CHAT') {
     return action.payload
   }
 
@@ -40,9 +40,9 @@ export const activeChatReducer = (state = initialState, action: AnyAction) => {
   return state
 }
 
-export const setActiveChatId = (chat: PrivateChatWithUsersType) => {
+export const setActiveChat = (chat: PrivateChatWithUsersType) => {
   return {
-    type: 'SET_ACTIVE_CHAT_ID',
+    type: 'SET_ACTIVE_CHAT',
     payload: {
       id: chat.id,
       users: chat.users,
