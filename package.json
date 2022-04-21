@@ -2,6 +2,7 @@
   "name": "chat-anonimo",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://felixgonzalo.github.io/chat-anonimo/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.4",
@@ -11,6 +12,7 @@
     "@types/node": "^16.11.27",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
+    "gh-pages": "^3.2.3",
     "nanoid": "^3.3.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
