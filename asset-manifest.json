@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/chat-anonimo/static/js/main.7055856d.js",
+    "main.js": "/chat-anonimo/static/js/main.f7c37e24.js",
     "static/js/787.d3306864.chunk.js": "/chat-anonimo/static/js/787.d3306864.chunk.js",
     "index.html": "/chat-anonimo/index.html",
-    "main.7055856d.js.map": "/chat-anonimo/static/js/main.7055856d.js.map",
+    "main.f7c37e24.js.map": "/chat-anonimo/static/js/main.f7c37e24.js.map",
     "787.d3306864.chunk.js.map": "/chat-anonimo/static/js/787.d3306864.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.7055856d.js"
+    "static/js/main.f7c37e24.js"
   ]
 }
