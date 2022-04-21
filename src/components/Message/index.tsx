@@ -10,14 +10,7 @@ import {
   ButtonDelete,
 } from './styles'
 
-export function Message({
-  id,
-  from,
-  to,
-  removedFor,
-  message,
-  date,
-}: MessageType) {
+export function Message({ id, from, removedFor, message, date }: MessageType) {
   const dispatch = useDispatch()
   const currentUser = useSelector((state: any) => state.currentUser)
   const activeChat = useSelector((state: any) => state.activeChat)

@@ -54,7 +54,6 @@ export const setActiveChat = (chat: PrivateChatWithUsersType) => {
 export const addMessageToActiveChat = (
   id: string,
   from: ChatUserType,
-  to: ChatUserType,
   message: string,
   date: number
 ) => {
@@ -63,7 +62,6 @@ export const addMessageToActiveChat = (
     payload: {
       id,
       from,
-      to,
       message,
       date,
     },

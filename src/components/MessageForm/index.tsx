@@ -22,18 +22,8 @@ export function MessageForm() {
     e.preventDefault()
     updateActiveChat()
 
-    if (inputMessage === '') {
-      return
-    }
+    if (inputMessage === '') return
 
-    const objective = activeChat.users.find(
-      (user: any) => user.id !== currentUser.id
-    )
-
-    const to = {
-      id: objective.id,
-      nick: objective.nick,
-    }
     const from = {
       id: currentUser.id,
       nick: currentUser.nick,
@@ -41,11 +31,10 @@ export function MessageForm() {
     const date = Date.now()
     const newId = nanoid()
 
-    dispatch(addMessageToActiveChat(newId, from, to, inputMessage, date))
+    dispatch(addMessageToActiveChat(newId, from, inputMessage, date))
     saveMsgInPrivateChatsOfLocalStorage(activeChat.id, {
       id: newId,
       from,
-      to,
       message: inputMessage,
       date,
     })
@@ -81,10 +70,7 @@ export function MessageForm() {
         const chatsParse = JSON.parse(chatsLocal)
         const chatUpdate = chatsParse.map((chat: PrivateChatType) => {
           if (chat.id === chatId) {
-            return {
-              ...chat,
-              messages: [...chat.messages, message],
-            }
+            return { ...chat, messages: [...chat.messages, message] }
           }
           return chat
         })

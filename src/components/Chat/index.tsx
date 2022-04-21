@@ -39,7 +39,6 @@ export function Chat({ users, messages }: ChatProps) {
                 key={index}
                 id={msg.id}
                 from={msg.from}
-                to={msg.to}
                 message={msg.message}
                 date={msg.date}
                 removedFor={msg.removedFor}
