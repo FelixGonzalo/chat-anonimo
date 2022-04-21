@@ -4,7 +4,7 @@ import { UserList } from '../UserList'
 import { UserType } from '../../types/user'
 import { PrivateChatType } from '../../types/privateChat'
 
-export function PrivateChatList() {
+export function PrivateChatList({ title }: { title: string }) {
   const currentUser = useSelector((state: any) => state.currentUser)
   const users = useSelector((state: any) => state.users)
   const privateChats = useSelector((state: any) => state.privateChats)
@@ -29,10 +29,5 @@ export function PrivateChatList() {
     }
   }, [privateChats])
 
-  return (
-    <div>
-      <h3>Mis chats privados</h3>
-      <UserList users={userChats} />
-    </div>
-  )
+  return <UserList users={userChats} title={title} />
 }

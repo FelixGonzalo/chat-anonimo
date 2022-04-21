@@ -1,40 +1,39 @@
 import { useSelector } from 'react-redux'
 import { UserList } from './components/UserList'
-import { UserForm } from './components/UserForm'
-import { User } from './components/User'
 import { Chat } from './components/Chat'
 import { useInitLocalDB } from './hooks/useInitLocalDB'
-import { useGetCurrentUser } from './hooks/useGetCurrentUser'
+import { useInitCurrentUser } from './hooks/useInitCurrentUser'
 import { initUserState } from './reducers/usersReducer'
 import { initPrivateChatsState } from './reducers/privateChatsReducer'
 import { Wrapper } from './styles/GlobalStyles'
 import { PrivateChatList } from './components/PrivateChatList'
+import { Profile } from './components/Profile'
 
 function App() {
+  const currentUser = useSelector((state: any) => state.currentUser)
   const users = useSelector((state: any) => state.users)
   const activeChat = useSelector((state: any) => state.activeChat)
-  const { currentUser } = useGetCurrentUser()
+  useInitCurrentUser()
 
   useInitLocalDB('users', initUserState)
   useInitLocalDB('privateChats', initPrivateChatsState)
 
+  if (!currentUser) {
+    return (
+      <Wrapper>
+        <h1>Chat Anónimo</h1>
+        <Profile />
+        <UserList users={users} title='Usuarios' />
+      </Wrapper>
+    )
+  }
+
   return (
     <Wrapper>
       <h1>Chat Anónimo</h1>
-
-      {currentUser ? (
-        <User
-          id={currentUser.id}
-          nick={currentUser.nick}
-          privateChatsId={currentUser.privateChatsId}
-        />
-      ) : (
-        <UserForm />
-      )}
-
-      <PrivateChatList />
-      <h2>Usuarios</h2>
-      <UserList users={users} />
+      <Profile />
+      <PrivateChatList title='Mis chats privados' />
+      <UserList users={users} title='Usuarios' />
 
       {activeChat.id !== '' ? (
         <>

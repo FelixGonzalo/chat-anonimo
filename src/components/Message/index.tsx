@@ -8,7 +8,6 @@ export function Message({ from, to, message, date }: MessageType) {
   if (from.id === currentUser.id) {
     return (
       <MessageContainer currentUser={true}>
-        <UserName>{from.nick}</UserName>
         <p>{message}</p>
         <DateName>{new Date(date).toLocaleString()}</DateName>
       </MessageContainer>
@@ -16,7 +15,7 @@ export function Message({ from, to, message, date }: MessageType) {
   }
   return (
     <MessageContainer currentUser={false}>
-      <UserName>{to.nick}</UserName>
+      <UserName>{from.nick}</UserName>
       <p>{message}</p>
       <DateName>{new Date(date).toLocaleString()}</DateName>
     </MessageContainer>

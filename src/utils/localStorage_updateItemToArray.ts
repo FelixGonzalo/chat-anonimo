@@ -1,4 +1,7 @@
-export const LocalStorage_addItemToArray = (item: any, arrayName: string) => {
+export const localStorage_updateItemToArray = (
+  item: any,
+  arrayName: string
+) => {
   try {
     const arrayLocalStorage = localStorage.getItem(arrayName) || null
 
@@ -11,7 +14,14 @@ export const LocalStorage_addItemToArray = (item: any, arrayName: string) => {
       return localStorage.setItem(arrayName, JSON.stringify([item]))
     }
 
-    localStorage.setItem(arrayName, JSON.stringify([...currentData, item]))
+    const arrayUpdate = currentData.map((data: any) => {
+      if (data.id === item.id) {
+        return item
+      }
+      return data
+    })
+
+    localStorage.setItem(arrayName, JSON.stringify(arrayUpdate))
   } catch (error) {
     console.error(error)
   }

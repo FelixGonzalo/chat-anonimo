@@ -4,7 +4,7 @@ import { addPrivateChat } from '../../reducers/privateChatsReducer'
 import { updateChatListOfUser } from '../../reducers/usersReducer'
 import { setCurrentUser } from '../../reducers/currentUserReducer'
 import { setActiveChatId } from '../../reducers/activeChatReducer'
-import { LocalStorage_addItemToArray } from '../../utils/LocalStorage_addItemToArray'
+import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
 import { UserType } from '../../types/user'
 import { PrivateChatType } from '../../types/privateChat'
 import { UserContainer, UserName } from './styles'
@@ -57,7 +57,7 @@ export function User({ id, nick }: UserType) {
           dispatch(updateChatListOfUser(id, newPrivateChat.id))
           dispatch(setCurrentUser(updateCurrentUser))
 
-          LocalStorage_addItemToArray(newPrivateChat, 'privateChats')
+          localStorage_addItemToArray(newPrivateChat, 'privateChats')
           updateUsersInLocalStorage(currentUser.id, newPrivateChat.id)
           updateUsersInLocalStorage(id, newPrivateChat.id)
           sessionStorage.setItem(

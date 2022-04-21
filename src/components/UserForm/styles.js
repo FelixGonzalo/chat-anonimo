@@ -1,14 +1,17 @@
 import styled from 'styled-components'
 
 export const FormContainer = styled.form`
+  max-width: 300px;
   display: flex;
   height: 40px;
 `
 
-export const InputMessage = styled.input`
+export const InputNick = styled.input`
   width: 100%;
-  padding: 0 5px;
+  padding: 0 10px;
   border-radius: 3px 0 0 3px;
+  font-size: 1rem;
+  font-weight: bold;
   outline: none;
   border: none;
 `

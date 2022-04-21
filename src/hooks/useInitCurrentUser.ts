@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setCurrentUser } from '../reducers/currentUserReducer'
 import { UserType } from '../types/user'
 
-export function useGetCurrentUser() {
-  const currentUser = useSelector((state: any) => state.currentUser)
+export function useInitCurrentUser() {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -33,6 +32,4 @@ export function useGetCurrentUser() {
       }
     }
   }, [])
-
-  return { currentUser }
 }

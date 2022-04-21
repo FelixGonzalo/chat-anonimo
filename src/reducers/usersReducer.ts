@@ -31,6 +31,19 @@ export const usersReducer = (
     })
   }
 
+  if (action.type === 'UPDATE_NICK_OF_USER') {
+    const { userId, nick } = action.payload
+    return state.map((user) => {
+      if (user.id === userId) {
+        return {
+          ...user,
+          nick,
+        }
+      }
+      return user
+    })
+  }
+
   return state
 }
 
@@ -60,6 +73,16 @@ export const updateChatListOfUser = (userId: string, privateChatId: string) => {
     payload: {
       userId,
       privateChatId,
+    },
+  }
+}
+
+export const updateNickOfUser = (userId: string, nick: string) => {
+  return {
+    type: 'UPDATE_NICK_OF_USER',
+    payload: {
+      userId,
+      nick,
     },
   }
 }
