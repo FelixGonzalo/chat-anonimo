@@ -2,7 +2,7 @@ import { useState, ChangeEvent, SyntheticEvent, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateNickOfUser } from '../../reducers/usersReducer'
 import { setCurrentUser } from '../../reducers/currentUserReducer'
-import { InputNick, Button, FormContainer } from '../UserForm/styles'
+import { InputNick, Button, FormContainer } from '../../styles/formStyles'
 import { localStorage_updateItemToArray } from '../../utils/localStorage_updateItemToArray'
 
 export function EditUserForm({ onSubmit }: { onSubmit: any }) {

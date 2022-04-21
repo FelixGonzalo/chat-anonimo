@@ -8,6 +8,7 @@ import { initPrivateChatsState } from './reducers/privateChatsReducer'
 import { Wrapper } from './styles/GlobalStyles'
 import { PrivateChatList } from './components/PrivateChatList'
 import { Profile } from './components/Profile'
+import { Search } from './components/Search'
 
 function App() {
   const currentUser = useSelector((state: any) => state.currentUser)
@@ -34,7 +35,7 @@ function App() {
       <Profile />
       <PrivateChatList title='Mis chats privados' />
       <UserList users={users} title='Usuarios' />
-
+      <Search />
       {activeChat.id !== '' ? (
         <>
           <h2>Chat</h2>

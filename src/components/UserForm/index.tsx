@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 import { addUser } from '../../reducers/usersReducer'
 import { setCurrentUser } from '../../reducers/currentUserReducer'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
-import { InputNick, Button, FormContainer } from './styles.js'
+import { InputNick, Button, FormContainer } from '../../styles/formStyles'
 
 export function UserForm() {
   const dispatch = useDispatch()

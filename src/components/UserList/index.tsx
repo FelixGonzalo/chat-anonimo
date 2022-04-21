@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { User } from '../User'
 import { Message } from './styles'
 
-export function UserList({ title, users }: UserListProps) {
+export function UserList({ title, users, messageNoData }: UserListProps) {
   const currentUser: UserType | null = useSelector(
     (state: any) => state.currentUser
   )
@@ -13,7 +13,7 @@ export function UserList({ title, users }: UserListProps) {
     return (
       <div>
         <h2>{title}</h2>
-        <Message>Sin usuarios</Message>
+        <Message>{messageNoData ? messageNoData : 'Sin usuarios'}</Message>
       </div>
     )
   }
