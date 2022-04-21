@@ -16,7 +16,7 @@ export function UserList({ users }: UserListProps) {
     <div>
       {users.map((user) => (
         <div key={user.id}>
-          {currentUser && user.id !== currentUser.id && (
+          {user.id !== currentUser?.id && (
             <User
               id={user.id}
               nick={user.nick}

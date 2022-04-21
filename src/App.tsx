@@ -8,6 +8,7 @@ import { useGetCurrentUser } from './hooks/useGetCurrentUser'
 import { initUserState } from './reducers/usersReducer'
 import { initPrivateChatsState } from './reducers/privateChatsReducer'
 import { Wrapper } from './styles/GlobalStyles'
+import { PrivateChatList } from './components/PrivateChatList'
 
 function App() {
   const users = useSelector((state: any) => state.users)
@@ -31,7 +32,8 @@ function App() {
         <UserForm />
       )}
 
-      <h2>Lista de usuarios actuales</h2>
+      <PrivateChatList />
+      <h2>Usuarios</h2>
       <UserList users={users} />
 
       {activeChat.id !== '' ? (
