@@ -14,10 +14,6 @@ export function Chat({ users, messages }: ChatProps) {
   const currentUser = useSelector((state: any) => state.currentUser)
   const refZonaChat = useRef<HTMLHeadingElement>(null)
 
-  if (!users || !messages) {
-    return <div>nada</div>
-  }
-
   useEffect(() => {
     try {
       const updateScroll = refZonaChat?.current?.scrollHeight
@@ -34,6 +30,7 @@ export function Chat({ users, messages }: ChatProps) {
       <ChatHeader>
         🥷🏻 {users.map((user) => (user.id !== currentUser.id ? user.nick : ''))}
       </ChatHeader>
+      {users.length < 1 && <h3>Inicia un chat</h3>}
       <ChatMessagesContainer ref={refZonaChat}>
         <ChatMessages>
           {messages &&
@@ -50,7 +47,7 @@ export function Chat({ users, messages }: ChatProps) {
             ))}
         </ChatMessages>
       </ChatMessagesContainer>
-      <MessageForm />
+      {users.length > 0 && <MessageForm />}
     </ChatContainer>
   )
 }
