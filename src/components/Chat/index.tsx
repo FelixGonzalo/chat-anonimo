@@ -1,28 +1,51 @@
+import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Message } from '../Message'
-import { ChatContainer, ChatHeader, ChatMessages } from './styles'
+import { MessageForm } from '../MessageForm'
+import {
+  ChatContainer,
+  ChatHeader,
+  ChatMessages,
+  ChatMessagesContainer,
+} from './styles'
 import { ChatProps } from './types'
 
 export function Chat({ users, messages }: ChatProps) {
   const currentUser = useSelector((state: any) => state.currentUser)
+
+  const refZonaChat = useRef<HTMLHeadingElement>(null)
+
+  useEffect(() => {
+    try {
+      const updateScroll = refZonaChat?.current?.scrollHeight
+      if (updateScroll) {
+        refZonaChat.current.scrollTop = updateScroll
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }, [messages])
 
   return (
     <ChatContainer>
       <ChatHeader>
         🥷🏻 {users.map((user) => (user.id !== currentUser.id ? user.nick : ''))}
       </ChatHeader>
-      <ChatMessages>
-        {messages &&
-          messages.map((msg, index) => (
-            <Message
-              key={index}
-              user_from={msg.user_from}
-              user_to={msg.user_to}
-              message={msg.message}
-              date={msg.date}
-            />
-          ))}
-      </ChatMessages>
+      <ChatMessagesContainer ref={refZonaChat}>
+        <ChatMessages>
+          {messages &&
+            messages.map((msg, index) => (
+              <Message
+                key={index}
+                from={msg.from}
+                to={msg.to}
+                message={msg.message}
+                date={msg.date}
+              />
+            ))}
+        </ChatMessages>
+      </ChatMessagesContainer>
+      <MessageForm />
     </ChatContainer>
   )
 }

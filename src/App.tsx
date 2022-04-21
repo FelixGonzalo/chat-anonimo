@@ -36,7 +36,7 @@ function App() {
       {activeChat.id !== '' ? (
         <>
           <h2>Chat</h2>
-          <Chat users={activeChat.users} messages={[]} />
+          <Chat users={activeChat.users} messages={activeChat.messages} />
         </>
       ) : (
         ''

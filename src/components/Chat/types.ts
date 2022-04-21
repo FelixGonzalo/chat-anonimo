@@ -1,7 +1,7 @@
 import { ChatUserType } from '../../types/privateChat'
-import { MessageProps } from '../Message/types'
+import { MessageType } from '../../types/message'
 
 export type ChatProps = {
   users: Array<ChatUserType>
-  messages: Array<MessageProps> | []
+  messages: Array<MessageType> | []
 }

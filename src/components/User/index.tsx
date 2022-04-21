@@ -8,7 +8,7 @@ import { setCurrentUser } from '../../reducers/currentUserReducer'
 import { setActiveChatId } from '../../reducers/activeChatReducer'
 import { LocalStorage_addItemToArray } from '../../utils/LocalStorage_addItemToArray'
 
-export function User({ id, nick, privateChatsId }: UserType) {
+export function User({ id, nick }: UserType) {
   const dispatch = useDispatch()
   const currentUser: UserType | null = useSelector(
     (state: any) => state.currentUser
@@ -89,8 +89,6 @@ export function User({ id, nick, privateChatsId }: UserType) {
             messages: activeChat.messages,
           })
         )
-        // console.log('chat activo', activeChat)
-        // alert('chat abierto')
       }
     } catch (error) {
       console.error(error)

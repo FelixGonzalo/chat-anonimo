@@ -1,25 +1,24 @@
-import { MessageContainer } from './styles'
-import { MessageProps } from './types'
 import { useSelector } from 'react-redux'
+import { MessageType } from '../../types/message'
+import { MessageContainer, UserName, DateName } from './styles'
 
-export function Message({ user_from, user_to, message, date }: MessageProps) {
+export function Message({ from, to, message, date }: MessageType) {
   const currentUser = useSelector((state: any) => state.currentUser)
 
-  if (user_from.id === currentUser.id) {
+  if (from.id === currentUser.id) {
     return (
       <MessageContainer currentUser={true}>
-        <span>{currentUser.nick}</span>
+        <UserName>{from.nick}</UserName>
         <p>{message}</p>
-        <span>{date}</span>
+        <DateName>{new Date(date).toLocaleString()}</DateName>
       </MessageContainer>
     )
   }
-
   return (
     <MessageContainer currentUser={false}>
-      <span>{user_to.nick}</span>
+      <UserName>{to.nick}</UserName>
       <p>{message}</p>
-      <span>{date}</span>
+      <DateName>{new Date(date).toLocaleString()}</DateName>
     </MessageContainer>
   )
 }
