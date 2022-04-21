@@ -7,6 +7,7 @@ import { useInitLocalDB } from './hooks/useInitLocalDB'
 import { useGetCurrentUser } from './hooks/useGetCurrentUser'
 import { initUserState } from './reducers/usersReducer'
 import { initPrivateChatsState } from './reducers/privateChatsReducer'
+import { Wrapper } from './styles/GlobalStyles'
 
 function App() {
   const users = useSelector((state: any) => state.users)
@@ -17,7 +18,7 @@ function App() {
   useInitLocalDB('privateChats', initPrivateChatsState)
 
   return (
-    <div className='App'>
+    <Wrapper>
       <h1>Chat Anónimo</h1>
 
       {currentUser ? (
@@ -41,7 +42,7 @@ function App() {
       ) : (
         ''
       )}
-    </div>
+    </Wrapper>
   )
 }
 

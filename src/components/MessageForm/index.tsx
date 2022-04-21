@@ -19,6 +19,10 @@ export function MessageForm() {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
 
+    if (inputMessage === '') {
+      return
+    }
+
     const objective = activeChat.users.find(
       (user: any) => user.id !== currentUser.id
     )

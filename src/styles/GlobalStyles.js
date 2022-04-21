@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
   body {
@@ -15,8 +15,20 @@ export const GlobalStyles = createGlobalStyle`
     color: #E4F2E7;
   }
 
+  h2 {
+    color: #E0E0D0
+  }
+
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
   }
+`
+export const Wrapper = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
 `

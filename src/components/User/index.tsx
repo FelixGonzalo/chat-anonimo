@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
-import { UserType } from '../../types/user'
-import { PrivateChatType } from '../../types/privateChat'
 import { addPrivateChat } from '../../reducers/privateChatsReducer'
 import { updateChatListOfUser } from '../../reducers/usersReducer'
 import { setCurrentUser } from '../../reducers/currentUserReducer'
 import { setActiveChatId } from '../../reducers/activeChatReducer'
 import { LocalStorage_addItemToArray } from '../../utils/LocalStorage_addItemToArray'
+import { UserType } from '../../types/user'
+import { PrivateChatType } from '../../types/privateChat'
+import { UserContainer, UserName } from './styles'
 
 export function User({ id, nick }: UserType) {
   const dispatch = useDispatch()
@@ -131,10 +132,17 @@ export function User({ id, nick }: UserType) {
     }
   }
 
+  if (currentUser && currentUser.id !== id) {
+    return (
+      <UserContainer onClick={openChat} click={true}>
+        🥷<UserName> {nick ? nick : 'Sin nombre'}</UserName>
+      </UserContainer>
+    )
+  }
+
   return (
-    <div>
-      <p>🥷 {nick ? nick : 'Sin nombre'}</p>
-      {currentUser && <button onClick={openChat}>chat</button>}
-    </div>
+    <UserContainer click={false}>
+      <UserName>🥷 {nick ? nick : 'Sin nombre'}</UserName>
+    </UserContainer>
   )
 }
