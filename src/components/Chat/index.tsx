@@ -37,10 +37,12 @@ export function Chat({ users, messages }: ChatProps) {
             messages.map((msg, index) => (
               <Message
                 key={index}
+                id={msg.id}
                 from={msg.from}
                 to={msg.to}
                 message={msg.message}
                 date={msg.date}
+                removedFor={msg.removedFor}
               />
             ))}
         </ChatMessages>

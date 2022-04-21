@@ -1,10 +1,11 @@
 import { useState, ChangeEvent, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { FormContainer, InputMessage, Button } from './styles'
 import { addMessageToActiveChat } from '../../reducers/activeChatReducer'
 import { addMessageToPrivateChat } from '../../reducers/privateChatsReducer'
 import { PrivateChatType } from '../../types/privateChat'
 import { MessageType } from '../../types/message'
+import { FormContainer, InputMessage, Button } from './styles'
+import { nanoid } from 'nanoid'
 
 export function MessageForm() {
   const dispatch = useDispatch()
@@ -36,12 +37,21 @@ export function MessageForm() {
       nick: currentUser.nick,
     }
     const date = Date.now()
+    const newId = nanoid()
 
-    dispatch(addMessageToActiveChat(from, to, inputMessage, date))
+    dispatch(addMessageToActiveChat(newId, from, to, inputMessage, date))
     dispatch(
-      addMessageToPrivateChat(activeChat.id, from, to, inputMessage, date)
+      addMessageToPrivateChat(
+        newId,
+        activeChat.id,
+        from,
+        to,
+        inputMessage,
+        date
+      )
     )
     saveMsgInPrivateChatsOfLocalStorage(activeChat.id, {
+      id: newId,
       from,
       to,
       message: inputMessage,
