@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { UserList } from '../UserList'
 import { InputNick, Button, FormContainer } from '../../styles/formStyles'
 import { UserType } from '../../types/user'
+import { SearchContainer } from './styles'
 
 export function Search() {
   const users = useSelector((state: any) => state.users)
@@ -33,7 +34,7 @@ export function Search() {
   }
 
   return (
-    <div>
+    <SearchContainer>
       <h2>Buscador</h2>
       <FormContainer onSubmit={handleSearch}>
         <InputNick
@@ -48,6 +49,6 @@ export function Search() {
         users={filterUsers}
         messageNoData='Sin resultados de búsqueda'
       />
-    </div>
+    </SearchContainer>
   )
 }

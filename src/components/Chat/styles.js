@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 export const ChatContainer = styled.div`
+  position: sticky;
+  top: 1vh;
   box-sizing: border-box;
   width: 100%;
   max-width: 600px;
