@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { removeMessageFromActiveChat } from '../../reducers/activeChatReducer'
-// import { removeMessageFromPrivateChat } from '../../reducers/privateChatsReducer'
 import { MessageType } from '../../types/message'
 import { PrivateChatType } from '../../types/privateChat'
 import {
@@ -26,7 +25,6 @@ export function Message({
   const removeMessage = () => {
     dispatch(removeMessageFromActiveChat(id, currentUser.id))
     removeMessageFromLocalStorage(activeChat.id, id, currentUser.id)
-    // dispatch(removeMessageFromPrivateChat(activeChat.id, id, currentUser.id)) // analyze if necessary because when activating another chat localstorage is used
   }
 
   const removeMessageFromLocalStorage = (

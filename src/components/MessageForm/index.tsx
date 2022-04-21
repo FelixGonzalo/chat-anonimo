@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMessageToActiveChat } from '../../reducers/activeChatReducer'
-import { addMessageToPrivateChat } from '../../reducers/privateChatsReducer'
 import { PrivateChatType } from '../../types/privateChat'
 import { MessageType } from '../../types/message'
 import { FormContainer, InputMessage, Button } from './styles'
@@ -40,16 +39,6 @@ export function MessageForm() {
     const newId = nanoid()
 
     dispatch(addMessageToActiveChat(newId, from, to, inputMessage, date))
-    dispatch(
-      addMessageToPrivateChat(
-        newId,
-        activeChat.id,
-        from,
-        to,
-        inputMessage,
-        date
-      )
-    )
     saveMsgInPrivateChatsOfLocalStorage(activeChat.id, {
       id: newId,
       from,
