@@ -11,20 +11,22 @@ export function PrivateChatList() {
   const [userChats, setUserChats] = useState([])
 
   useEffect(() => {
-    const myChats = privateChats.filter((chat: any) =>
-      currentUser.privateChatsId.includes(chat.id)
-    )
+    if (currentUser) {
+      const myChats = privateChats?.filter((chat: any) =>
+        currentUser.privateChatsId.includes(chat.id)
+      )
 
-    const userChats = users.filter((user: UserType) => {
-      let band = false
-      myChats.forEach((chat: PrivateChatType) => {
-        if (chat.usersId.includes(user.id)) {
-          band = true
-        }
+      const userChats = users.filter((user: UserType) => {
+        let band = false
+        myChats.forEach((chat: PrivateChatType) => {
+          if (chat.usersId.includes(user.id)) {
+            band = true
+          }
+        })
+        return band
       })
-      return band
-    })
-    setUserChats(userChats)
+      setUserChats(userChats)
+    }
   }, [privateChats])
 
   return (
