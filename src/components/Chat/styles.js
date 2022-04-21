@@ -4,11 +4,13 @@ export const ChatContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
   max-width: 600px;
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 98vh;
+  max-height: 98vh;
   padding: 10px;
   background: #336b6b;
   border-radius: 3px;
+  display: flex;
+  flex-direction: column;
 `
 
 export const ChatHeader = styled.div`
@@ -19,9 +21,8 @@ export const ChatHeader = styled.div`
 
 export const ChatMessagesContainer = styled.div`
   padding-right: 5px;
-  padding-bottom: 20px;
-  min-height: 80vh;
-  max-height: 80vh;
+  margin-bottom: 20px;
+  flex-grow: 1;
   overflow: auto;
 `
 

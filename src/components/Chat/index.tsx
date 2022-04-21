@@ -12,8 +12,11 @@ import { ChatProps } from './types'
 
 export function Chat({ users, messages }: ChatProps) {
   const currentUser = useSelector((state: any) => state.currentUser)
-
   const refZonaChat = useRef<HTMLHeadingElement>(null)
+
+  if (!users || !messages) {
+    return <div>nada</div>
+  }
 
   useEffect(() => {
     try {

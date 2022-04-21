@@ -2,12 +2,17 @@ import styled from 'styled-components'
 
 export const FormContainer = styled.form`
   display: flex;
-  height: 40px;
+  height: 60px;
+`
+
+export const FormFooter = styled.div`
+  margin-top: 5px;
+  text-align: right;
 `
 
 export const InputMessage = styled.input`
   width: 100%;
-  padding: 0 5px;
+  padding: 0 10px;
   border-radius: 3px 0 0 3px;
   outline: none;
   border: none;

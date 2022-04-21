@@ -4,7 +4,7 @@ import { addMessageToActiveChat } from '../../reducers/activeChatReducer'
 import { setActiveChat } from '../../reducers/activeChatReducer'
 import { PrivateChatType } from '../../types/privateChat'
 import { MessageType } from '../../types/message'
-import { FormContainer, InputMessage, Button } from './styles'
+import { FormContainer, InputMessage, Button, FormFooter } from './styles'
 import { nanoid } from 'nanoid'
 import { localStorage_getArray } from '../../utils/localStorage_getArray'
 
@@ -106,7 +106,9 @@ export function MessageForm() {
         />
         <Button>Enviar</Button>
       </FormContainer>
-      <Button onClick={updateActiveChat}>Actualizar chat</Button>
+      <FormFooter>
+        <Button onClick={updateActiveChat}>Actualizar chat</Button>
+      </FormFooter>
     </>
   )
 }
