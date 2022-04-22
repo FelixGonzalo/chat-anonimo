@@ -9,28 +9,46 @@ import {
   DateName,
   ButtonDelete,
 } from './styles'
+import { removeMessageFromActiveGroupChat } from '../../reducers/activeGroupChatReducer'
 
 export function Message({ id, from, removedFor, message, date }: MessageType) {
   const dispatch = useDispatch()
   const currentUser = useSelector((state: any) => state.currentUser)
   const activeChat = useSelector((state: any) => state.activeChat)
+  const activeGroupChat = useSelector((state: any) => state.activeGroupChat)
 
   const removeMessage = () => {
-    dispatch(removeMessageFromActiveChat(id, currentUser.id))
-    removeMessageFromLocalStorage(activeChat.id, id, currentUser.id)
+    if (activeChat.id) {
+      dispatch(removeMessageFromActiveChat(id, currentUser.id))
+      removeMessageFromLocalStorage(
+        activeChat.id,
+        id,
+        currentUser.id,
+        'privateChats'
+      )
+    } else {
+      dispatch(removeMessageFromActiveGroupChat(id, currentUser.id))
+      removeMessageFromLocalStorage(
+        activeGroupChat.id,
+        id,
+        currentUser.id,
+        'groupChats'
+      )
+    }
   }
 
   const removeMessageFromLocalStorage = (
     chatId: string,
     messageId: string,
-    userId: string
+    userId: string,
+    itemLocalStorage: string
   ) => {
     try {
-      const privateChatsLocal = localStorage.getItem('privateChats') || null
-      if (!privateChatsLocal) return
-      const privateChats: Array<ChatType> = JSON.parse(privateChatsLocal)
+      const chatsLocal = localStorage.getItem(itemLocalStorage) || null
+      if (!chatsLocal) return
+      const chats: Array<ChatType> = JSON.parse(chatsLocal)
 
-      const updateChats = privateChats.map((chat) => {
+      const updateChats = chats.map((chat) => {
         if (chat.id === chatId) {
           const messageUpdate = chat.messages.map((message) => {
             if (message.id === messageId) {
@@ -48,7 +66,7 @@ export function Message({ id, from, removedFor, message, date }: MessageType) {
         }
         return chat
       })
-      localStorage.setItem('privateChats', JSON.stringify(updateChats))
+      localStorage.setItem(itemLocalStorage, JSON.stringify(updateChats))
     } catch (error) {
       console.error(error)
     }

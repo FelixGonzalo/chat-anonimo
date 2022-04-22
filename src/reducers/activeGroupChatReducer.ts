@@ -64,15 +64,15 @@ export const addMessageToActiveGroupChat = (
   }
 }
 
-// export const removeMessageFromActiveGroupChat = (
-//   messageId: string,
-//   userId: string
-// ) => {
-//   return {
-//     type: 'REMOVE_MESSAGE_FROM_ACTIVE_GROUP_CHAT',
-//     payload: {
-//       messageId,
-//       userId,
-//     },
-//   }
-// }
+export const removeMessageFromActiveGroupChat = (
+  messageId: string,
+  userId: string
+) => {
+  return {
+    type: 'REMOVE_MESSAGE_FROM_ACTIVE_GROUP_CHAT',
+    payload: {
+      messageId,
+      userId,
+    },
+  }
+}
