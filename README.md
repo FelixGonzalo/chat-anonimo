@@ -1,46 +1,50 @@
-# Getting Started with Create React App
+# Reto chat anónimo
+
+Se desea construir un chat donde cada usuario sea uno nuevo por cada pestaña y pueda escribir a otros usuarios en privado o escribir en chats grupales por categoría, donde las categorías ya son dadas desde un comienzo a libre elección del participante.
+
+## Requerimientos
+
+1. Chats grupales por categorias.
+2. Chats privados de usuarios a usuario.
+3. Lista de todos los usuarios existentes.
+4. Lista de mis chats existentes.
+5. Poder cambiar el nick anónimo que se me asigna al entrar.
+6. Buscador de usuarios o grupos.
+7. Cada usuario debe poder crear chats grupales.
+
+## Vista de cada chat
+
+1. Poder mandar mensajes.
+2. Poder borrar mensajes (Se le debe ocultar solo al que borro el mensaje).
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Stack Requeridos
 
-In the project directory, you can run:
+- React
+- Styled components
+- React hooks
+- Componentes funcionales
+- Redux
+- Typescript
 
-### `npm start`
+No es necesario hacer el backend, se puede hacer solo en el navegador
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Mi resultado v1
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+[Link a versión 1](https://felixgonzalo.github.io/chat-anonimo/)
 
-### `npm test`
+![Img overview project](./chatv1.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Realizado
 
-### `npm run build`
+- Todos los requerimientos cumplidos.
+- Stack requerido
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Plan para v2
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Mejorar la utilización de localStorage
+- Mejorar el manejo de tipos de datos
+- Mejorar el diseño
