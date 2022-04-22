@@ -6,6 +6,15 @@ export type ChatType = {
   messages: Array<MessageType> | []
 }
 
+export type GroupChatType = {
+  id: string
+  name: string
+  usersId: Array<string>
+  createdBy: string
+  category: string
+  messages: Array<MessageType> | []
+}
+
 export type ActiveChatType = {
   id: string
   users: Array<ChatUserType>

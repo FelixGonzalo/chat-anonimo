@@ -4,6 +4,8 @@ import { Search } from '../Search'
 import { Profile } from '../Profile'
 import { UserList } from '../UserList'
 import { MenuContainer } from './styles'
+import { GroupChatList } from '../GroupChatList'
+import { MyGroupChatsList } from '../MyGroupChatsList'
 
 export function Menu() {
   const users = useSelector((state: any) => state.users)
@@ -13,7 +15,9 @@ export function Menu() {
       <Profile />
       <Search />
       <PrivateChatList title='Mis chats privados' />
+      <MyGroupChatsList />
       <UserList users={users} title='Usuarios' />
+      <GroupChatList />
     </MenuContainer>
   )
 }

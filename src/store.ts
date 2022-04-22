@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { currentUserReducer } from './reducers/currentUserReducer'
+import { activeChatReducer } from './reducers/activeChatReducer'
 import { usersReducer } from './reducers/usersReducer'
 import { privateChatsReducer } from './reducers/privateChatsReducer'
-import { activeChatReducer } from './reducers/activeChatReducer'
+import { groupChatsReducer } from './reducers/groupChatsReducer'
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     activeChat: activeChatReducer,
     users: usersReducer,
     privateChats: privateChatsReducer,
+    groupChats: groupChatsReducer,
   },
 })
