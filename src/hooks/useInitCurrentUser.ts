@@ -6,7 +6,7 @@ import { UserType } from '../types/user'
 export function useInitCurrentUser() {
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  const initCurrentUser = () => {
     try {
       const userSessionStorage: any = sessionStorage.getItem('currentUser')
       if (userSessionStorage) {
@@ -31,5 +31,9 @@ export function useInitCurrentUser() {
         console.error(error)
       }
     }
+  }
+
+  useEffect(() => {
+    initCurrentUser()
   }, [])
 }
