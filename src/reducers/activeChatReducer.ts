@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux'
 import { MessageType } from '../types/message'
-import { PrivateChatWithUsersType } from '../types/privateChat'
-import { ChatUserType } from '../types/privateChat'
+import { ActiveChatType } from '../types/chat'
+import { ChatUserType } from '../types/chat'
 
 type InitialStateProps = {
   id: string
@@ -40,7 +40,7 @@ export const activeChatReducer = (state = initialState, action: AnyAction) => {
   return state
 }
 
-export const setActiveChat = (chat: PrivateChatWithUsersType) => {
+export const setActiveChat = (chat: ActiveChatType) => {
   return {
     type: 'SET_ACTIVE_CHAT',
     payload: {

@@ -1,4 +1,4 @@
-import { ChatUserType } from '../../types/privateChat'
+import { ChatUserType } from '../../types/chat'
 import { MessageType } from '../../types/message'
 
 export type ChatProps = {

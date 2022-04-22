@@ -6,7 +6,7 @@ import { setCurrentUser } from '../../reducers/currentUserReducer'
 import { setActiveChat } from '../../reducers/activeChatReducer'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
 import { UserType } from '../../types/user'
-import { PrivateChatType } from '../../types/privateChat'
+import { ChatType } from '../../types/chat'
 import { UserContainer, UserName } from './styles'
 
 export function User({ id, nick }: UserType) {
@@ -28,8 +28,7 @@ export function User({ id, nick }: UserType) {
         const privateChatsLocal: string | null =
           localStorage.getItem('privateChats')
         if (privateChatsLocal) {
-          const privateChats: Array<PrivateChatType> =
-            JSON.parse(privateChatsLocal)
+          const privateChats: Array<ChatType> = JSON.parse(privateChatsLocal)
           const result = privateChats.filter(
             (chat) =>
               chat.usersId.includes(currentUser.id) && chat.usersId.includes(id)
@@ -42,7 +41,7 @@ export function User({ id, nick }: UserType) {
         if (!activeChat) {
           // the two users do not have a active chat
           // creat chat
-          const newPrivateChat: PrivateChatType = {
+          const newPrivateChat: ChatType = {
             id: nanoid(),
             usersId: [currentUser.id, id],
             messages: [],

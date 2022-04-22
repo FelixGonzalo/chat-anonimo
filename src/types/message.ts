@@ -1,4 +1,4 @@
-import { ChatUserType } from './privateChat'
+import { ChatUserType } from './chat'
 
 export type MessageType = {
   id: string

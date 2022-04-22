@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { removeMessageFromActiveChat } from '../../reducers/activeChatReducer'
 import { MessageType } from '../../types/message'
-import { PrivateChatType } from '../../types/privateChat'
+import { ChatType } from '../../types/chat'
 import {
   MessageContainer,
   MessageHeader,
@@ -28,7 +28,7 @@ export function Message({ id, from, removedFor, message, date }: MessageType) {
     try {
       const privateChatsLocal = localStorage.getItem('privateChats') || null
       if (!privateChatsLocal) return
-      const privateChats: Array<PrivateChatType> = JSON.parse(privateChatsLocal)
+      const privateChats: Array<ChatType> = JSON.parse(privateChatsLocal)
 
       const updateChats = privateChats.map((chat) => {
         if (chat.id === chatId) {

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { UserList } from '../UserList'
 import { UserType } from '../../types/user'
-import { PrivateChatType } from '../../types/privateChat'
+import { ChatType } from '../../types/chat'
 
 export function PrivateChatList({ title }: { title: string }) {
   const currentUser = useSelector((state: any) => state.currentUser)
@@ -18,7 +18,7 @@ export function PrivateChatList({ title }: { title: string }) {
 
       const userChats = users.filter((user: UserType) => {
         let band = false
-        myChats.forEach((chat: PrivateChatType) => {
+        myChats.forEach((chat: ChatType) => {
           if (chat.usersId.includes(user.id)) {
             band = true
           }

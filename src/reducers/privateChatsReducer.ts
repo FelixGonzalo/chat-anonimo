@@ -1,9 +1,8 @@
 import { AnyAction } from 'redux'
-import { PrivateChatType } from '../types/privateChat'
-// import { ChatUserType } from '../types/privateChat'
+import { ChatType } from '../types/chat'
 
 export const privateChatsReducer = (
-  state: Array<PrivateChatType> = [],
+  state: Array<ChatType> = [],
   action: AnyAction
 ) => {
   if (action.type === 'INIT_PRIVATE_CHATS_STATE') {
@@ -12,7 +11,7 @@ export const privateChatsReducer = (
 
   if (action.type === 'ADD_PRIVATE_CHAT') {
     const index = state.findIndex(
-      (chat: PrivateChatType) =>
+      (chat: ChatType) =>
         chat.usersId.includes(action.payload.usersId[0]) &&
         chat.usersId.includes(action.payload.usersId[1])
     )
@@ -25,14 +24,14 @@ export const privateChatsReducer = (
 
 // actions creators
 
-export const initPrivateChatsState = (chats: Array<PrivateChatType>) => {
+export const initPrivateChatsState = (chats: Array<ChatType>) => {
   return {
     type: 'INIT_PRIVATE_CHATS_STATE',
     payload: chats,
   }
 }
 
-export const addPrivateChat = ({ id, usersId, messages }: PrivateChatType) => {
+export const addPrivateChat = ({ id, usersId, messages }: ChatType) => {
   return {
     type: 'ADD_PRIVATE_CHAT',
     payload: {

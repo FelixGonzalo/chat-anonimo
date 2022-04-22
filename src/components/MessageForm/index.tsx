@@ -2,7 +2,7 @@ import { useState, ChangeEvent, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMessageToActiveChat } from '../../reducers/activeChatReducer'
 import { setActiveChat } from '../../reducers/activeChatReducer'
-import { PrivateChatType } from '../../types/privateChat'
+import { ChatType } from '../../types/chat'
 import { MessageType } from '../../types/message'
 import { FormContainer, InputMessage, Button, FormFooter } from './styles'
 import { nanoid } from 'nanoid'
@@ -43,7 +43,7 @@ export function MessageForm() {
   }
 
   const updateActiveChat = () => {
-    const privateChatsLocal: Array<PrivateChatType> =
+    const privateChatsLocal: Array<ChatType> =
       localStorage_getArray('privateChats')
     const chatLocal = privateChatsLocal.find(
       (chat) => chat.id === activeChat.id
@@ -68,7 +68,7 @@ export function MessageForm() {
       const chatsLocal: string | null = localStorage.getItem('privateChats')
       if (chatsLocal) {
         const chatsParse = JSON.parse(chatsLocal)
-        const chatUpdate = chatsParse.map((chat: PrivateChatType) => {
+        const chatUpdate = chatsParse.map((chat: ChatType) => {
           if (chat.id === chatId) {
             return { ...chat, messages: [...chat.messages, message] }
           }
