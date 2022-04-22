@@ -11,7 +11,6 @@ import { GroupMessageForm } from '../GroupMessageForm'
 import { Message } from '../Message'
 
 export function GroupChat() {
-  const currentUser = useSelector((state: any) => state.currentUser)
   const refZonaChat = useRef<HTMLHeadingElement>(null)
   const activeGroupChat: ActiveGroupChatType = useSelector(
     (state: any) => state.activeGroupChat

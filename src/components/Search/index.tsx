@@ -1,12 +1,14 @@
 import { useState, ChangeEvent, SyntheticEvent } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { UserList } from '../UserList'
 import { InputNick, Button, FormContainer } from '../../styles/formStyles'
 import { UserType } from '../../types/user'
 import { SearchContainer } from './styles'
+import { initUserState } from '../../reducers/usersReducer'
+import { localStorage_getArray } from '../../utils/localStorage_getArray'
 
 export function Search() {
-  const users = useSelector((state: any) => state.users)
+  const dispatch = useDispatch()
 
   const [search, setSearch] = useState('')
   const [filterUsers, setFilterUsers] = useState<Array<UserType>>([])
@@ -17,6 +19,10 @@ export function Search() {
 
   const handleSearch = (e: SyntheticEvent) => {
     e.preventDefault()
+
+    updateUsersWithlocalDB('users', initUserState)
+    const users = localStorage_getArray('users')
+
     if (search.trim() === '') return setFilterUsers([])
     const maxResult = 3
     let constResult = 0
@@ -31,6 +37,16 @@ export function Search() {
       }
     })
     setFilterUsers(searchResult)
+  }
+
+  const updateUsersWithlocalDB = (itemLocalStorage: string, action: any) => {
+    try {
+      const data: any = localStorage.getItem(itemLocalStorage)
+      const currentData = JSON.parse(data)
+      dispatch(action(currentData))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

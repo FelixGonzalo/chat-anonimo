@@ -9,7 +9,11 @@ export function UserList({ title, users, messageNoData }: UserListProps) {
     (state: any) => state.currentUser
   )
 
-  if (users.length < 1 || !users) {
+  if (
+    users.length < 1 ||
+    !users ||
+    (users.length === 1 && users[0].id === currentUser?.id)
+  ) {
     return (
       <div>
         <h2>{title}</h2>
