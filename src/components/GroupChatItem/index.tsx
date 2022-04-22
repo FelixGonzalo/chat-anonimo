@@ -61,7 +61,7 @@ export function GroupChatItem({ id, name }: { id: string; name: string }) {
 
           // update groupChats in redux
           dispatch(addUserInGroupChat(currentUser.id, id))
-          // update users in redux (verificar si es necesario al crear y abrir chat grupal)
+          // update users in redux no need
         }
 
         // get the data of all the users of the group chat
@@ -85,8 +85,9 @@ export function GroupChatItem({ id, name }: { id: string; name: string }) {
           ...thisGroupChat,
           users: usersInGroupChat,
         }
+
+        // active groupChat and  disable privateChat
         dispatch(setActiveGroupChat(activeGroupChat))
-        // disable private chat
         dispatch(
           setActiveChat({
             id: '',

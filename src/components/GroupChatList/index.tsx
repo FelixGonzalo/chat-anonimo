@@ -8,6 +8,8 @@ import { UserType } from '../../types/user'
 import { ButtonAddChat, CategoryTitle, ChatList } from './styles'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
 import { updateUsersInLocalStorage } from '../../utils/updateUsersInLocalStorage'
+import { setActiveChat } from '../../reducers/activeChatReducer'
+import { setActiveGroupChat } from '../../reducers/activeGroupChatReducer'
 
 export function GroupChatList() {
   const dispatch = useDispatch()
@@ -51,7 +53,17 @@ export function GroupChatList() {
     dispatch(setCurrentUser(updateCurrentUser))
     sessionStorage.setItem('currentUser', JSON.stringify(updateCurrentUser))
 
-    // update users in redux (verificar si es necesario al crear y abrir chat grupal)
+    // active groupChat and  disable privateChat
+    dispatch(setActiveGroupChat({ ...newChat, users: [] }))
+    dispatch(
+      setActiveChat({
+        id: '',
+        users: [],
+        messages: [],
+      })
+    )
+
+    // update users in redux no need
   }
 
   return (
