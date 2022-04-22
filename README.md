@@ -1,3 +1,20 @@
+# Mi resultado v1 del Reto chat anónimo
+
+[Link a versión 1](https://felixgonzalo.github.io/chat-anonimo/)
+
+![Img overview project](./chatv1.png)
+
+## Realizado
+
+- Todos los requerimientos cumplidos.
+- Stack requerido
+
+## Plan para v2
+
+- Mejorar la utilización de localStorage
+- Mejorar el manejo de tipos de datos
+- Mejorar el diseño
+
 # Reto chat anónimo
 
 Se desea construir un chat donde cada usuario sea uno nuevo por cada pestaña y pueda escribir a otros usuarios en privado o escribir en chats grupales por categoría, donde las categorías ya son dadas desde un comienzo a libre elección del participante.
@@ -31,20 +48,3 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Typescript
 
 No es necesario hacer el backend, se puede hacer solo en el navegador
-
-# Mi resultado v1
-
-[Link a versión 1](https://felixgonzalo.github.io/chat-anonimo/)
-
-![Img overview project](./chatv1.png)
-
-## Realizado
-
-- Todos los requerimientos cumplidos.
-- Stack requerido
-
-## Plan para v2
-
-- Mejorar la utilización de localStorage
-- Mejorar el manejo de tipos de datos
-- Mejorar el diseño
