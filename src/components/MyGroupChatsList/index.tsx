@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { GroupChatType } from '../../types/chat'
-import { GroupChat } from '../GroupChat'
+import { GroupChatItem } from '../GroupChatItem'
 import { Message } from '../GroupChatList/styles'
 
 export function MyGroupChatsList() {
@@ -31,7 +31,7 @@ export function MyGroupChatsList() {
     <div>
       <h2>Mis chats grupales</h2>
       {myGroupChats.map((chat: GroupChatType) => (
-        <GroupChat key={chat.id} id={chat.id} name={chat.name} />
+        <GroupChatItem key={chat.id} id={chat.id} name={chat.name} />
       ))}
     </div>
   )

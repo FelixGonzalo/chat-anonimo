@@ -17,6 +17,7 @@ export const MessageHeader = styled.div`
 `
 
 export const UserName = styled.span`
+  font-weight: bold;
   font-size: 0.8rem;
 `
 

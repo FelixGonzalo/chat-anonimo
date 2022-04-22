@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from 'nanoid'
 import { addGroupChat } from '../../reducers/groupChatsReducer'
-import { GroupChat } from '../GroupChat'
+import { GroupChatItem } from '../GroupChatItem'
 import { setCurrentUser } from '../../reducers/currentUserReducer'
 import { GroupChatType } from '../../types/chat'
 import { UserType } from '../../types/user'
 import { ButtonAddChat, CategoryTitle, ChatList } from './styles'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
+import { updateUsersInLocalStorage } from '../../utils/updateUsersInLocalStorage'
 
 export function GroupChatList() {
   const dispatch = useDispatch()
@@ -27,15 +28,19 @@ export function GroupChatList() {
       messages: [],
     }
 
-    dispatch(addGroupChat(newChat))
-    localStorage_addItemToArray(newChat, 'groupChats')
+    dispatch(addGroupChat(newChat)) // update groupChats in redux
+    localStorage_addItemToArray(newChat, 'groupChats') // update groupChats in localstorage
+    updateUsersInLocalStorage(currentUser.id, newChat.id) // update users in localstorage
 
+    // update currentUser in session storage with this group chat
+    // update currentUser in redux
     if (!currentUser.groupsChatsId || currentUser.groupsChatsId.length < 1) {
       const updateCurrentUser: UserType = {
         ...currentUser,
         groupsChatsId: [newId],
       }
       dispatch(setCurrentUser(updateCurrentUser))
+      sessionStorage.setItem('currentUser', JSON.stringify(updateCurrentUser))
       return
     }
 
@@ -44,6 +49,9 @@ export function GroupChatList() {
       groupsChatsId: [...currentUser.groupsChatsId, newId],
     }
     dispatch(setCurrentUser(updateCurrentUser))
+    sessionStorage.setItem('currentUser', JSON.stringify(updateCurrentUser))
+
+    // update users in redux (verificar si es necesario al crear y abrir chat grupal)
   }
 
   return (
@@ -59,7 +67,7 @@ export function GroupChatList() {
             {groupChats
               .filter((chat: GroupChatType) => chat.category === category)
               .map((chat: GroupChatType) => (
-                <GroupChat key={chat.id} id={chat.id} name={chat.name} />
+                <GroupChatItem key={chat.id} id={chat.id} name={chat.name} />
               ))}
           </ChatList>
         </div>

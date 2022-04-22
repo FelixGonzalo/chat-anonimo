@@ -8,6 +8,7 @@ import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToA
 import { UserType } from '../../types/user'
 import { ChatType } from '../../types/chat'
 import { UserContainer, UserName } from './styles'
+import { setActiveGroupChat } from '../../reducers/activeGroupChatReducer'
 
 export function User({ id, nick }: UserType) {
   const dispatch = useDispatch()
@@ -87,6 +88,17 @@ export function User({ id, nick }: UserType) {
               },
             ],
             messages: activeChat.messages,
+          })
+        )
+        // disable group chat
+        dispatch(
+          setActiveGroupChat({
+            id: '',
+            name: '',
+            createdBy: '',
+            category: '',
+            users: [],
+            messages: [],
           })
         )
       }

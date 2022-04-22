@@ -11,11 +11,28 @@ const initialState: {
 
 export const groupChatsReducer = (state = initialState, action: AnyAction) => {
   if (action.type === 'INIT_GROUP_CHATS_STATE') {
-    return { ...state, chats: action.payload } || state
+    if (!action.payload) return state
+    return { ...state, chats: action.payload }
   }
 
   if (action.type === 'ADD_GROUP_CHAT') {
     return { ...state, chats: [...state.chats, action.payload] }
+  }
+
+  if (action.type === 'ADD_USER_IN_GROUP_CHAT') {
+    const { userId, groupChatId } = action.payload
+
+    const updateChats = state.chats.map((chat) => {
+      if (chat.id === groupChatId) {
+        return {
+          ...chat,
+          usersId: [...chat.usersId, userId],
+        }
+      }
+      return chat
+    })
+
+    return { ...state, chats: updateChats }
   }
 
   return state
@@ -34,5 +51,12 @@ export const addGroupChat = (groupChat: GroupChatType) => {
   return {
     type: 'ADD_GROUP_CHAT',
     payload: groupChat,
+  }
+}
+
+export const addUserInGroupChat = (userId: string, groupChatId: string) => {
+  return {
+    type: 'ADD_USER_IN_GROUP_CHAT',
+    payload: { userId, groupChatId },
   }
 }
