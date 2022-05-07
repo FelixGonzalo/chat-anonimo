@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
+import { RootState } from '../../state'
 import { ActiveGroupChatType } from '../../types/chat'
 import {
   ChatContainer,
@@ -13,7 +14,7 @@ import { Message } from '../Message'
 export function GroupChat() {
   const refZonaChat = useRef<HTMLHeadingElement>(null)
   const activeGroupChat: ActiveGroupChatType = useSelector(
-    (state: any) => state.activeGroupChat
+    (state: RootState) => state.activeGroupChat
   )
 
   useEffect(() => {

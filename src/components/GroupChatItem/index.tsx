@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setActiveChat } from '../../reducers/activeChatReducer'
-import { setActiveGroupChat } from '../../reducers/activeGroupChatReducer'
-import { setCurrentUser } from '../../reducers/currentUserReducer'
-import { addUserInGroupChat } from '../../reducers/groupChatsReducer'
+import { RootState, actionCreators } from '../../state'
 import { ActiveGroupChatType, GroupChatType } from '../../types/chat'
 import { UserType } from '../../types/user'
 import { localStorage_getArray } from '../../utils/localStorage_getArray'
@@ -13,7 +10,7 @@ import { GroupChatContainer } from './styles'
 export function GroupChatItem({ id, name }: { id: string; name: string }) {
   const dispatch = useDispatch()
   const currentUser: UserType | null = useSelector(
-    (state: any) => state.currentUser
+    (state: RootState) => state.currentUser
   )
 
   const openChat = () => {
@@ -42,7 +39,7 @@ export function GroupChatItem({ id, name }: { id: string; name: string }) {
               ...currentUser,
               groupsChatsId: [...currentUser.groupsChatsId, id],
             }
-            dispatch(setCurrentUser(updateCurrentUser))
+            dispatch(actionCreators.setCurrentUser(updateCurrentUser))
             sessionStorage.setItem(
               'currentUser',
               JSON.stringify(updateCurrentUser)
@@ -52,7 +49,7 @@ export function GroupChatItem({ id, name }: { id: string; name: string }) {
               ...currentUser,
               groupsChatsId: [id],
             }
-            dispatch(setCurrentUser(updateCurrentUser))
+            dispatch(actionCreators.setCurrentUser(updateCurrentUser))
             sessionStorage.setItem(
               'currentUser',
               JSON.stringify(updateCurrentUser)
@@ -60,7 +57,7 @@ export function GroupChatItem({ id, name }: { id: string; name: string }) {
           }
 
           // update groupChats in redux
-          dispatch(addUserInGroupChat(currentUser.id, id))
+          dispatch(actionCreators.addUserInGroupChat(currentUser.id, id))
           // update users in redux no need
         }
 
@@ -87,9 +84,9 @@ export function GroupChatItem({ id, name }: { id: string; name: string }) {
         }
 
         // active groupChat and  disable privateChat
-        dispatch(setActiveGroupChat(activeGroupChat))
+        dispatch(actionCreators.setActiveGroupChat(activeGroupChat))
         dispatch(
-          setActiveChat({
+          actionCreators.setActiveChat({
             id: '',
             users: [],
             messages: [],

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { RootState } from '../../state'
 import { PrivateChatList } from '../PrivateChatList'
 import { Search } from '../Search'
 import { Profile } from '../Profile'
@@ -8,7 +9,7 @@ import { GroupChatList } from '../GroupChatList'
 import { MyGroupChatsList } from '../MyGroupChatsList'
 
 export function Menu() {
-  const users = useSelector((state: any) => state.users)
+  const users = useSelector((state: RootState) => state.users)
 
   return (
     <MenuContainer>

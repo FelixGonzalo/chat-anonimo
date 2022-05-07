@@ -3,16 +3,17 @@ import { useSelector } from 'react-redux'
 import { UserList } from '../UserList'
 import { UserType } from '../../types/user'
 import { ChatType } from '../../types/chat'
+import { RootState } from '../../state'
 
 export function PrivateChatList({ title }: { title: string }) {
-  const currentUser = useSelector((state: any) => state.currentUser)
-  const users = useSelector((state: any) => state.users)
-  const privateChats = useSelector((state: any) => state.privateChats)
+  const currentUser = useSelector((state: RootState) => state.currentUser)
+  const users = useSelector((state: RootState) => state.users)
+  const privateChats = useSelector((state: RootState) => state.privateChats)
   const [userChats, setUserChats] = useState([])
 
   useEffect(() => {
     if (currentUser) {
-      const myChats = privateChats?.filter((chat: any) =>
+      const myChats = privateChats?.filter((chat: ChatType) =>
         currentUser.privateChatsId.includes(chat.id)
       )
 

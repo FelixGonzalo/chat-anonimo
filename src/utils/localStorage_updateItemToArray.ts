@@ -1,3 +1,4 @@
+/*eslint-disable */
 export const localStorage_updateItemToArray = (
   item: any,
   arrayName: string
@@ -26,3 +27,4 @@ export const localStorage_updateItemToArray = (
     console.error(error)
   }
 }
+/*eslint-enable */

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
+import { RootState } from '../../state'
 import { Message } from '../Message'
 import { MessageForm } from '../MessageForm'
 import {
@@ -11,7 +12,7 @@ import {
 import { ChatProps } from './types'
 
 export function Chat({ users, messages }: ChatProps) {
-  const currentUser = useSelector((state: any) => state.currentUser)
+  const currentUser = useSelector((state: RootState) => state.currentUser)
   const refZonaChat = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {

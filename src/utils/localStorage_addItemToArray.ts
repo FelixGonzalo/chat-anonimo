@@ -1,4 +1,7 @@
-export const localStorage_addItemToArray = (item: any, arrayName: string) => {
+export const localStorage_addItemToArray = (
+  item: any, // eslint-disable-line
+  arrayName: string
+) => {
   try {
     const arrayLocalStorage = localStorage.getItem(arrayName) || null
 

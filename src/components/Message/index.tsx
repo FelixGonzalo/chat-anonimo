@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { removeMessageFromActiveChat } from '../../reducers/activeChatReducer'
+import { RootState, actionCreators } from '../../state'
 import { MessageType } from '../../types/message'
 import { ChatType } from '../../types/chat'
 import {
@@ -9,17 +9,18 @@ import {
   DateName,
   ButtonDelete,
 } from './styles'
-import { removeMessageFromActiveGroupChat } from '../../reducers/activeGroupChatReducer'
 
 export function Message({ id, from, removedFor, message, date }: MessageType) {
   const dispatch = useDispatch()
-  const currentUser = useSelector((state: any) => state.currentUser)
-  const activeChat = useSelector((state: any) => state.activeChat)
-  const activeGroupChat = useSelector((state: any) => state.activeGroupChat)
+  const currentUser = useSelector((state: RootState) => state.currentUser)
+  const activeChat = useSelector((state: RootState) => state.activeChat)
+  const activeGroupChat = useSelector(
+    (state: RootState) => state.activeGroupChat
+  )
 
   const removeMessage = () => {
     if (activeChat.id) {
-      dispatch(removeMessageFromActiveChat(id, currentUser.id))
+      dispatch(actionCreators.removeMessageFromActiveChat(id, currentUser.id))
       removeMessageFromLocalStorage(
         activeChat.id,
         id,
@@ -27,7 +28,9 @@ export function Message({ id, from, removedFor, message, date }: MessageType) {
         'privateChats'
       )
     } else {
-      dispatch(removeMessageFromActiveGroupChat(id, currentUser.id))
+      dispatch(
+        actionCreators.removeMessageFromActiveGroupChat(id, currentUser.id)
+      )
       removeMessageFromLocalStorage(
         activeGroupChat.id,
         id,

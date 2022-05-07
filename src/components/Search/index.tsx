@@ -1,13 +1,12 @@
 import { useState, ChangeEvent, SyntheticEvent } from 'react'
 import { useDispatch } from 'react-redux'
+import { actionCreators } from '../../state'
 import { UserList } from '../UserList'
 import { InputNick, Button, FormContainer } from '../../styles/formStyles'
 import { UserType } from '../../types/user'
 import { SearchContainer } from './styles'
-import { initUserState } from '../../reducers/usersReducer'
 import { localStorage_getArray } from '../../utils/localStorage_getArray'
 import { Message } from '../UserList/styles'
-import { initGroupChatsState } from '../../reducers/groupChatsReducer'
 import { GroupChatType } from '../../types/chat'
 import { GroupChatItem } from '../GroupChatItem'
 
@@ -27,8 +26,11 @@ export function Search() {
   const handleSearch = (e: SyntheticEvent) => {
     e.preventDefault()
 
-    updateArrayStateWithlocalDB('users', initUserState)
-    updateArrayStateWithlocalDB('groupChats', initGroupChatsState)
+    updateArrayStateWithlocalDB('users', actionCreators.initUserState)
+    updateArrayStateWithlocalDB(
+      'groupChats',
+      actionCreators.initGroupChatsState
+    )
     const users = localStorage_getArray('users')
     const groupChats = localStorage_getArray('groupChats')
 
@@ -54,7 +56,6 @@ export function Search() {
     const searchResult2: Array<GroupChatType> = []
     groupChats.forEach((chat: GroupChatType) => {
       if (results > maxResult - 1) return
-      console.log(chat.name)
       if (
         chat.name.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1
       ) {
@@ -62,17 +63,15 @@ export function Search() {
         results++
       }
     })
-    console.log(searchResult2)
     setFilterGroupChats(searchResult2)
-    console.log(filterGroupChats)
   }
 
   const updateArrayStateWithlocalDB = (
     itemLocalStorage: string,
-    action: any
+    action: any // eslint-disable-line
   ) => {
     try {
-      const data: any = localStorage.getItem(itemLocalStorage)
+      const data: any = localStorage.getItem(itemLocalStorage) // eslint-disable-line
       const currentData = JSON.parse(data)
       dispatch(action(currentData))
     } catch (error) {

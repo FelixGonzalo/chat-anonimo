@@ -1,19 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
-import { addPrivateChat } from '../../reducers/privateChatsReducer'
-import { updateChatListOfUser } from '../../reducers/usersReducer'
-import { setCurrentUser } from '../../reducers/currentUserReducer'
-import { setActiveChat } from '../../reducers/activeChatReducer'
+import { RootState, actionCreators } from '../../state'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
 import { UserType } from '../../types/user'
 import { ChatType } from '../../types/chat'
 import { UserContainer, UserName } from './styles'
-import { setActiveGroupChat } from '../../reducers/activeGroupChatReducer'
 
 export function User({ id, nick }: UserType) {
   const dispatch = useDispatch()
   const currentUser: UserType | null = useSelector(
-    (state: any) => state.currentUser
+    (state: RootState) => state.currentUser
   )
 
   const openChat = () => {
@@ -52,10 +48,15 @@ export function User({ id, nick }: UserType) {
             privateChatsId: [...currentUser.privateChatsId, newPrivateChat.id],
           }
 
-          dispatch(addPrivateChat(newPrivateChat))
-          dispatch(updateChatListOfUser(currentUser.id, newPrivateChat.id))
-          dispatch(updateChatListOfUser(id, newPrivateChat.id))
-          dispatch(setCurrentUser(updateCurrentUser))
+          dispatch(actionCreators.addPrivateChat(newPrivateChat))
+          dispatch(
+            actionCreators.updateChatListOfUser(
+              currentUser.id,
+              newPrivateChat.id
+            )
+          )
+          dispatch(actionCreators.updateChatListOfUser(id, newPrivateChat.id))
+          dispatch(actionCreators.setCurrentUser(updateCurrentUser))
 
           localStorage_addItemToArray(newPrivateChat, 'privateChats')
           updateUsersInLocalStorage(currentUser.id, newPrivateChat.id)
@@ -69,13 +70,13 @@ export function User({ id, nick }: UserType) {
           // update the current User with the active chat of the other user
           const userLocal = getUserByIdFromLocalStorage(currentUser.id)
           if (userLocal) {
-            dispatch(setCurrentUser(userLocal))
+            dispatch(actionCreators.setCurrentUser(userLocal))
             sessionStorage.setItem('currentUser', JSON.stringify(userLocal))
           }
         }
 
         dispatch(
-          setActiveChat({
+          actionCreators.setActiveChat({
             id: activeChat.id,
             users: [
               {
@@ -92,7 +93,7 @@ export function User({ id, nick }: UserType) {
         )
         // disable group chat
         dispatch(
-          setActiveGroupChat({
+          actionCreators.setActiveGroupChat({
             id: '',
             name: '',
             createdBy: '',

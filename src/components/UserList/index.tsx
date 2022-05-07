@@ -1,12 +1,13 @@
+import { useSelector } from 'react-redux'
+import { RootState } from '../../state'
 import { UserListProps } from './types'
 import { UserType } from '../../types/user'
-import { useSelector } from 'react-redux'
 import { User } from '../User'
 import { Message } from './styles'
 
 export function UserList({ title, users, messageNoData }: UserListProps) {
   const currentUser: UserType | null = useSelector(
-    (state: any) => state.currentUser
+    (state: RootState) => state.currentUser
   )
 
   if (

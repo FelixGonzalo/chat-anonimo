@@ -1,8 +1,7 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
-import { addUser } from '../../reducers/usersReducer'
-import { setCurrentUser } from '../../reducers/currentUserReducer'
+import { actionCreators } from '../../state'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
 import { InputNick, Button, FormContainer } from '../../styles/formStyles'
 
@@ -26,8 +25,8 @@ export function UserForm() {
     }
 
     if (!userSessionStorage) {
-      dispatch(addUser(newUser))
-      dispatch(setCurrentUser(newUser))
+      dispatch(actionCreators.addUser(newUser))
+      dispatch(actionCreators.setCurrentUser(newUser))
       sessionStorage.setItem('currentUser', JSON.stringify(newUser))
       localStorage_addItemToArray(newUser, 'users')
     }

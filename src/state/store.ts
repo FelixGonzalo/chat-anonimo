@@ -8,11 +8,13 @@ import { groupChatsReducer } from './reducers/groupChatsReducer'
 
 export const store = configureStore({
   reducer: {
-    currentUser: currentUserReducer,
     activeChat: activeChatReducer,
     activeGroupChat: activeGroupChatReducer,
-    users: usersReducer,
-    privateChats: privateChatsReducer,
+    currentUser: currentUserReducer,
     groupChats: groupChatsReducer,
+    privateChats: privateChatsReducer,
+    users: usersReducer,
   },
 })
+
+export type RootState = ReturnType<typeof store.getState>

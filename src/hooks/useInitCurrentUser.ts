@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setCurrentUser } from '../reducers/currentUserReducer'
+import { actionCreators } from '../state'
 import { UserType } from '../types/user'
 
 export function useInitCurrentUser() {
@@ -8,19 +8,20 @@ export function useInitCurrentUser() {
 
   const initCurrentUser = () => {
     try {
-      const userSessionStorage: any = sessionStorage.getItem('currentUser')
+      const userSessionStorage = sessionStorage.getItem('currentUser')
       if (userSessionStorage) {
         const userParse: UserType = JSON.parse(userSessionStorage) || null
         // update currentUser of sessionStorage with the data of localStorage
-        const usersLocalStorage: any = localStorage.getItem('users')
+        const usersLocalStorage = localStorage.getItem('users')
+        if (!usersLocalStorage) return
         const usersParse: Array<UserType> =
           JSON.parse(usersLocalStorage) || null
         const userUpdate = usersParse.find((user) => user.id === userParse.id)
         if (userUpdate) {
           sessionStorage.setItem('currentUser', JSON.stringify(userUpdate))
-          dispatch(setCurrentUser(userUpdate))
+          dispatch(actionCreators.setCurrentUser(userUpdate))
         } else {
-          dispatch(setCurrentUser(userParse))
+          dispatch(actionCreators.setCurrentUser(userParse))
         }
       }
     } catch (error) {

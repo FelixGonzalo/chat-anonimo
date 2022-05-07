@@ -1,18 +1,16 @@
 import { useSelector } from 'react-redux'
-import { useInitLocalDB } from './hooks/useInitLocalDB'
-import { useInitCurrentUser } from './hooks/useInitCurrentUser'
-import { initUserState } from './reducers/usersReducer'
-import { initPrivateChatsState } from './reducers/privateChatsReducer'
+import { RootState, actionCreators } from './state'
 import { Login } from './pages/Login'
 import { Home } from './pages/Home'
-import { initGroupChatsState } from './reducers/groupChatsReducer'
+import { useInitLocalDB } from './hooks/useInitLocalDB'
+import { useInitCurrentUser } from './hooks/useInitCurrentUser'
 
 function App() {
-  const currentUser = useSelector((state: any) => state.currentUser)
+  const currentUser = useSelector((state: RootState) => state.currentUser)
   useInitCurrentUser()
-  useInitLocalDB('users', initUserState)
-  useInitLocalDB('privateChats', initPrivateChatsState)
-  useInitLocalDB('groupChats', initGroupChatsState)
+  useInitLocalDB('users', actionCreators.initUserState)
+  useInitLocalDB('privateChats', actionCreators.initPrivateChatsState)
+  useInitLocalDB('groupChats', actionCreators.initGroupChatsState)
 
   if (!currentUser) return <Login />
   return <Home />

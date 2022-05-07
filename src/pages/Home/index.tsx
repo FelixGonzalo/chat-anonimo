@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { RootState } from '../../state'
 import { Chat } from '../../components/Chat'
 import { GroupChat } from '../../components/GroupChat'
 import { Menu } from '../../components/Menu'
@@ -6,8 +7,10 @@ import { Wrapper } from '../../styles/GlobalStyles'
 import { HomeBody } from './styles'
 
 export function Home() {
-  const activeChat = useSelector((state: any) => state.activeChat)
-  const activeGroupChat = useSelector((state: any) => state.activeGroupChat)
+  const activeChat = useSelector((state: RootState) => state.activeChat)
+  const activeGroupChat = useSelector(
+    (state: RootState) => state.activeGroupChat
+  )
 
   return (
     <Wrapper>

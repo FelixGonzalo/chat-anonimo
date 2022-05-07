@@ -1,0 +1,4 @@
+export enum privateChatsActionTypes {
+  INIT_PRIVATE_CHATS_STATE = 'INIT_PRIVATE_CHATS_STATE',
+  ADD_PRIVATE_CHAT = 'ADD_PRIVATE_CHAT',
+}

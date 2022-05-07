@@ -1,23 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from 'nanoid'
-import { addGroupChat } from '../../reducers/groupChatsReducer'
+import { RootState, actionCreators } from '../../state'
 import { GroupChatItem } from '../GroupChatItem'
-import { setCurrentUser } from '../../reducers/currentUserReducer'
 import { GroupChatType } from '../../types/chat'
 import { UserType } from '../../types/user'
 import { ButtonAddChat, CategoryTitle, ChatList } from './styles'
 import { localStorage_addItemToArray } from '../../utils/localStorage_addItemToArray'
 import { updateUsersInLocalStorage } from '../../utils/updateUsersInLocalStorage'
-import { setActiveChat } from '../../reducers/activeChatReducer'
-import { setActiveGroupChat } from '../../reducers/activeGroupChatReducer'
 
 export function GroupChatList() {
   const dispatch = useDispatch()
-  const currentUser = useSelector((state: any) => state.currentUser)
+  const currentUser = useSelector((state: RootState) => state.currentUser)
   const categories: Array<string> = useSelector(
-    (state: any) => state.groupChats.categories
+    (state: RootState) => state.groupChats.categories
   )
-  const groupChats = useSelector((state: any) => state.groupChats.chats)
+  const groupChats = useSelector((state: RootState) => state.groupChats.chats)
 
   const createGroupChat = (category: string) => {
     const newId = nanoid()
@@ -30,7 +27,7 @@ export function GroupChatList() {
       messages: [],
     }
 
-    dispatch(addGroupChat(newChat)) // update groupChats in redux
+    dispatch(actionCreators.addGroupChat(newChat)) // update groupChats in redux
     localStorage_addItemToArray(newChat, 'groupChats') // update groupChats in localstorage
     updateUsersInLocalStorage(currentUser.id, newChat.id) // update users in localstorage
 
@@ -41,7 +38,7 @@ export function GroupChatList() {
         ...currentUser,
         groupsChatsId: [newId],
       }
-      dispatch(setCurrentUser(updateCurrentUser))
+      dispatch(actionCreators.setCurrentUser(updateCurrentUser))
       sessionStorage.setItem('currentUser', JSON.stringify(updateCurrentUser))
       return
     }
@@ -50,13 +47,13 @@ export function GroupChatList() {
       ...currentUser,
       groupsChatsId: [...currentUser.groupsChatsId, newId],
     }
-    dispatch(setCurrentUser(updateCurrentUser))
+    dispatch(actionCreators.setCurrentUser(updateCurrentUser))
     sessionStorage.setItem('currentUser', JSON.stringify(updateCurrentUser))
 
     // active groupChat and  disable privateChat
-    dispatch(setActiveGroupChat({ ...newChat, users: [] }))
+    dispatch(actionCreators.setActiveGroupChat({ ...newChat, users: [] }))
     dispatch(
-      setActiveChat({
+      actionCreators.setActiveChat({
         id: '',
         users: [],
         messages: [],

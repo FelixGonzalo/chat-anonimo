@@ -1,14 +1,17 @@
 import { useState, ChangeEvent, SyntheticEvent, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateNickOfUser } from '../../reducers/usersReducer'
-import { setCurrentUser } from '../../reducers/currentUserReducer'
+import { RootState, actionCreators } from '../../state'
 import { InputNick, Button, FormContainer } from '../../styles/formStyles'
+import { UserType } from '../../types/user'
 import { localStorage_updateItemToArray } from '../../utils/localStorage_updateItemToArray'
 
-export function EditUserForm({ onSubmit }: { onSubmit: any }) {
+type EditUserFormProps = {
+  onSubmit: any // eslint-disable-line
+}
+
+export function EditUserForm({ onSubmit }: EditUserFormProps) {
   const dispatch = useDispatch()
-  const currentUser = useSelector((state: any) => state.currentUser)
-  const users = useSelector((state: any) => state.users)
+  const currentUser = useSelector((state: RootState) => state.currentUser)
 
   const [nick, setNick] = useState(currentUser?.nick || '')
 
@@ -20,11 +23,11 @@ export function EditUserForm({ onSubmit }: { onSubmit: any }) {
     e.preventDefault()
     const userSessionStorage = sessionStorage.getItem('currentUser') || null
     if (userSessionStorage) {
-      const userUpdate: any = JSON.parse(userSessionStorage)
+      const userUpdate: UserType = JSON.parse(userSessionStorage)
       userUpdate.nick = nick
 
-      dispatch(setCurrentUser(userUpdate))
-      dispatch(updateNickOfUser(currentUser.id, nick))
+      dispatch(actionCreators.setCurrentUser(userUpdate))
+      dispatch(actionCreators.updateNickOfUser(currentUser.id, nick))
       sessionStorage.setItem('currentUser', JSON.stringify(userUpdate))
       localStorage_updateItemToArray(userUpdate, 'users')
     }

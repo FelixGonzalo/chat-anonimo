@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addMessageToActiveChat } from '../../reducers/activeChatReducer'
-import { setActiveChat } from '../../reducers/activeChatReducer'
+import { RootState, actionCreators } from '../../state'
 import { ChatType } from '../../types/chat'
 import { MessageType } from '../../types/message'
 import { FormContainer, InputMessage, Button, FormFooter } from './styles'
@@ -11,8 +10,8 @@ import { localStorage_getArray } from '../../utils/localStorage_getArray'
 export function MessageForm() {
   const dispatch = useDispatch()
   const [inputMessage, setInputMessage] = useState<string>('')
-  const currentUser = useSelector((state: any) => state.currentUser)
-  const activeChat = useSelector((state: any) => state.activeChat)
+  const currentUser = useSelector((state: RootState) => state.currentUser)
+  const activeChat = useSelector((state: RootState) => state.activeChat)
 
   const handleInputMessage = (e: ChangeEvent<HTMLInputElement>) => {
     setInputMessage(e.target.value)
@@ -31,7 +30,9 @@ export function MessageForm() {
     const date = Date.now()
     const newId = nanoid()
 
-    dispatch(addMessageToActiveChat(newId, from, inputMessage, date))
+    dispatch(
+      actionCreators.addMessageToActiveChat(newId, from, inputMessage, date)
+    )
     saveMsgInPrivateChatsOfLocalStorage(activeChat.id, {
       id: newId,
       from,
@@ -51,7 +52,7 @@ export function MessageForm() {
 
     if (chatLocal) {
       dispatch(
-        setActiveChat({
+        actionCreators.setActiveChat({
           id: activeChat.id,
           users: activeChat.users,
           messages: chatLocal.messages,
