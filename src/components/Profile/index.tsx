@@ -4,7 +4,6 @@ import { RootState, actionCreators } from '../../state'
 import { UserType } from '../../types/user'
 import { EditUserForm } from '../EditUserForm'
 import { User } from '../User'
-import { UserForm } from '../UserForm'
 import { ButtonEdit, ButtonUpdate } from './styles'
 
 export function Profile() {
@@ -70,7 +69,7 @@ export function Profile() {
     <>
       {editUser && <EditUserForm onSubmit={() => setEditUser(false)} />}
 
-      {currentUser ? (
+      {currentUser && (
         <>
           {!editUser && (
             <User
@@ -85,8 +84,6 @@ export function Profile() {
           </ButtonEdit>
           <ButtonUpdate onClick={updateChat}>actualizar menu</ButtonUpdate>
         </>
-      ) : (
-        <UserForm />
       )}
     </>
   )

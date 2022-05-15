@@ -1,4 +1,4 @@
-import { Profile } from '../../components/Profile'
+import { LoginForm } from '../../components/LoginForm'
 import { Wrapper } from '../../styles/GlobalStyles'
 import { LoginContainer } from './styles'
 
@@ -7,7 +7,7 @@ export function Login() {
     <Wrapper>
       <LoginContainer>
         <h1>Chat Anónimo 🥷</h1>
-        <Profile />
+        <LoginForm />
       </LoginContainer>
     </Wrapper>
   )
