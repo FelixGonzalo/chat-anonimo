@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux'
-import { RootState } from '../../state'
 import { PrivateChatList } from '../PrivateChatList'
 import { Search } from '../Search'
 import { Profile } from '../Profile'
@@ -7,9 +5,10 @@ import { UserList } from '../UserList'
 import { MenuContainer } from './styles'
 import { GroupChatList } from '../GroupChatList'
 import { MyGroupChatsList } from '../MyGroupChatsList'
+import { useUserList } from '../../hooks/useUserList'
 
 export function Menu() {
-  const users = useSelector((state: RootState) => state.users)
+  const { otherUsers } = useUserList()
 
   return (
     <MenuContainer>
@@ -17,7 +16,7 @@ export function Menu() {
       <Search />
       <PrivateChatList title='Mis chats privados' />
       <MyGroupChatsList />
-      <UserList users={users} title='Usuarios' />
+      <UserList users={otherUsers} title='Usuarios' />
       <GroupChatList />
     </MenuContainer>
   )

@@ -1,23 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../state'
+import { useMyGroupChatList } from '../../hooks/useMyGroupChatList'
 import { GroupChatType } from '../../types/chat'
 import { GroupChatItem } from '../GroupChatItem'
 import { Message } from '../GroupChatList/styles'
 
 export function MyGroupChatsList() {
-  const currentUser = useSelector((state: RootState) => state.currentUser)
-  const groupChats = useSelector((state: RootState) => state.groupChats.chats)
-  const [myGroupChats, setMyGroupChats] = useState([])
-
-  useEffect(() => {
-    if (currentUser) {
-      const myChats = groupChats?.filter(
-        (chat: GroupChatType) => chat.createdBy === currentUser.id
-      )
-      setMyGroupChats(myChats)
-    }
-  }, [groupChats])
+  const { myGroupChats } = useMyGroupChatList()
 
   if (myGroupChats.length < 1) {
     return (
