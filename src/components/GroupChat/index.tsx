@@ -1,7 +1,5 @@
-import { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../state'
-import { ActiveGroupChatType } from '../../types/chat'
+import { useActiveGroupChat } from '../../hooks/useActiveGroupChat'
+import { useScrollBottom } from '../../hooks/useScrollBottom'
 import {
   ChatContainer,
   ChatHeader,
@@ -12,26 +10,13 @@ import { GroupMessageForm } from '../GroupMessageForm'
 import { Message } from '../Message'
 
 export function GroupChat() {
-  const refZonaChat = useRef<HTMLHeadingElement>(null)
-  const activeGroupChat: ActiveGroupChatType = useSelector(
-    (state: RootState) => state.activeGroupChat
-  )
-
-  useEffect(() => {
-    try {
-      const updateScroll = refZonaChat?.current?.scrollHeight
-      if (updateScroll) {
-        refZonaChat.current.scrollTop = updateScroll
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }, [activeGroupChat.messages])
+  const { activeGroupChat } = useActiveGroupChat()
+  const { refElement } = useScrollBottom(activeGroupChat.messages)
 
   return (
     <ChatContainer>
       <ChatHeader>🌎 {activeGroupChat.name}</ChatHeader>
-      <ChatMessagesContainer ref={refZonaChat}>
+      <ChatMessagesContainer ref={refElement}>
         <ChatMessages>
           {activeGroupChat.messages &&
             activeGroupChat.messages.map((msg) => (

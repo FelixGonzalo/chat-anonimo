@@ -1,7 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState, actionCreators } from '../../state'
 import { MessageType } from '../../types/message'
-import { ChatType } from '../../types/chat'
 import {
   MessageContainer,
   MessageHeader,
@@ -9,73 +6,14 @@ import {
   DateName,
   ButtonDelete,
 } from './styles'
+import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { useRemoveMessageFromChat } from '../../hooks/useRemoveMessageFromChat'
 
 export function Message({ id, from, removedFor, message, date }: MessageType) {
-  const dispatch = useDispatch()
-  const currentUser = useSelector((state: RootState) => state.currentUser)
-  const activeChat = useSelector((state: RootState) => state.activeChat)
-  const activeGroupChat = useSelector(
-    (state: RootState) => state.activeGroupChat
-  )
+  const { currentUser } = useCurrentUser()
+  const { removeMessage } = useRemoveMessageFromChat(id)
 
-  const removeMessage = () => {
-    if (activeChat.id) {
-      dispatch(actionCreators.removeMessageFromActiveChat(id, currentUser.id))
-      removeMessageFromLocalStorage(
-        activeChat.id,
-        id,
-        currentUser.id,
-        'privateChats'
-      )
-    } else {
-      dispatch(
-        actionCreators.removeMessageFromActiveGroupChat(id, currentUser.id)
-      )
-      removeMessageFromLocalStorage(
-        activeGroupChat.id,
-        id,
-        currentUser.id,
-        'groupChats'
-      )
-    }
-  }
-
-  const removeMessageFromLocalStorage = (
-    chatId: string,
-    messageId: string,
-    userId: string,
-    itemLocalStorage: string
-  ) => {
-    try {
-      const chatsLocal = localStorage.getItem(itemLocalStorage) || null
-      if (!chatsLocal) return
-      const chats: Array<ChatType> = JSON.parse(chatsLocal)
-
-      const updateChats = chats.map((chat) => {
-        if (chat.id === chatId) {
-          const messageUpdate = chat.messages.map((message) => {
-            if (message.id === messageId) {
-              if (!message.removedFor)
-                return { ...message, removedFor: [userId] }
-              if (!message.removedFor.includes(userId))
-                return {
-                  ...message,
-                  removedFor: [...message.removedFor, userId],
-                }
-            }
-            return message
-          })
-          return { ...chat, messages: messageUpdate }
-        }
-        return chat
-      })
-      localStorage.setItem(itemLocalStorage, JSON.stringify(updateChats))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  if (from.id === currentUser.id) {
+  if (currentUser && from.id === currentUser.id) {
     if (removedFor?.includes(currentUser.id)) {
       return (
         <MessageContainer currentUser={true}>
@@ -97,7 +35,7 @@ export function Message({ id, from, removedFor, message, date }: MessageType) {
     )
   }
 
-  if (removedFor?.includes(currentUser.id)) {
+  if (currentUser && removedFor?.includes(currentUser.id)) {
     return (
       <MessageContainer currentUser={false}>mensaje eliminado</MessageContainer>
     )
